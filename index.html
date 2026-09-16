@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABC Multimarcas | Encontre o carro dos seus sonhos</title>
+<meta name="description" content="ABC Multimarcas - As melhores marcas e os melhores preços em veículos seminovos e novos. Fale com um consultor agora mesmo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23e30613%22/><text x=%2250%22 y=%2266%22 font-size=%2258%22 font-family=%22Arial%22 font-weight=%22900%22 fill=%22%230a0a0a%22 text-anchor=%22middle%22>A</text></svg>">
+</head>
+<body>
+
+<div class="noise-overlay"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- Loader -->
+<div class="loader" id="loader">
+  <div class="loader-logo">ABC<span>MULTIMARCAS</span></div>
+  <div class="loader-bar"><span></span></div>
+</div>
+
+<!-- Header -->
+<header class="header" id="header">
+  <div class="container header-inner">
+    <a href="#topo" class="logo">ABC<span>MULTIMARCAS</span></a>
+    <nav class="nav" id="nav">
+      <a href="#diferenciais">Diferenciais</a>
+      <a href="#veiculos">Veículos</a>
+      <a href="#como-funciona">Como Funciona</a>
+      <a href="#depoimentos">Depoimentos</a>
+      <a href="#faq">Dúvidas</a>
+    </nav>
+    <div class="header-actions">
+      <a href="tel:+5500000000000" class="phone-pill"><i class="fa-solid fa-phone"></i> (00) 00000-0000</a>
+      <a href="#lead-form" class="btn btn-primary btn-sm">Quero Comprar</a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#diferenciais">Diferenciais</a>
+  <a href="#veiculos">Veículos</a>
+  <a href="#como-funciona">Como Funciona</a>
+  <a href="#depoimentos">Depoimentos</a>
+  <a href="#faq">Dúvidas</a>
+  <a href="#lead-form" class="btn btn-primary">Quero Comprar</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="topo">
+  <div class="hero-bg">
+    <div class="grid-overlay"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="speed-lines">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <div class="container hero-inner">
+    <div class="hero-text" data-reveal>
+      <span class="tag-pill"><i class="fa-solid fa-bolt"></i> Novos &amp; Seminovos Revisados</span>
+      <h1>Sua próxima <span class="text-glitch" data-text="conquista">conquista</span> sobre <span class="stroke-text">4 rodas</span></h1>
+      <p class="hero-sub">Na ABC Multimarcas você encontra as melhores marcas com procedência garantida, condições facilitadas e um atendimento feito para você fechar negócio hoje mesmo.</p>
+
+      <div class="hero-cta-row">
+        <a href="#lead-form" class="btn btn-primary btn-lg">
+          <i class="fa-solid fa-car-side"></i> Quero Falar com um Consultor
+        </a>
+        <a href="#veiculos" class="btn btn-ghost btn-lg">Ver Estoque <i class="fa-solid fa-arrow-down"></i></a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <strong data-counter="12">0</strong><span>anos no mercado</span>
+        </div>
+        <div class="stat">
+          <strong data-counter="3200">0</strong><span>carros entregues</span>
+        </div>
+        <div class="stat">
+          <strong data-counter="98">0</strong><span>% de aprovação</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual" data-reveal>
+      <div class="car-stage">
+        <div class="car-glow"></div>
+        <svg class="hero-car" viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="320" cy="230" rx="260" ry="18" fill="black" opacity="0.5"/>
+          <path d="M40 170 C40 130 90 120 140 110 L180 70 C195 55 220 45 250 45 L400 45 C430 45 455 58 470 80 L500 115 C560 120 600 135 600 165 C600 190 585 200 560 200 L520 200 C520 175 500 155 475 155 C450 155 430 175 430 200 L230 200 C230 175 210 155 185 155 C160 155 140 175 140 200 L95 200 C65 200 40 195 40 170 Z" fill="url(#carGrad)" stroke="#e30613" stroke-width="2"/>
+          <path d="M215 75 L245 50 L390 50 L420 80 L215 80 Z" fill="#0d0d0d" opacity="0.85"/>
+          <line x1="300" y1="52" x2="300" y2="78" stroke="#e30613" stroke-width="2"/>
+          <circle cx="185" cy="200" r="40" fill="#0a0a0a" stroke="#333" stroke-width="6"/>
+          <circle cx="185" cy="200" r="16" fill="#e30613"/>
+          <circle cx="475" cy="200" r="40" fill="#0a0a0a" stroke="#333" stroke-width="6"/>
+          <circle cx="475" cy="200" r="16" fill="#e30613"/>
+          <rect x="500" y="105" width="45" height="14" rx="4" fill="#ffdede"/>
+          <rect x="55" y="140" width="18" height="10" rx="3" fill="#e30613"/>
+          <defs>
+            <linearGradient id="carGrad" x1="40" y1="45" x2="600" y2="200" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#1a1a1a"/>
+              <stop offset="0.5" stop-color="#2b2b2b"/>
+              <stop offset="1" stop-color="#111111"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="floating-badge badge-1"><i class="fa-solid fa-shield-halved"></i> Procedência Garantida</div>
+      <div class="floating-badge badge-2"><i class="fa-solid fa-hand-holding-dollar"></i> Financiamento Facilitado</div>
+    </div>
+  </div>
+
+  <a href="#diferenciais" class="scroll-cue"><span></span> Role para descobrir</a>
+</section>
+
+<!-- MARQUEE BRANDS -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>CHEVROLET</span><span>VOLKSWAGEN</span><span>FIAT</span><span>FORD</span><span>HYUNDAI</span><span>TOYOTA</span><span>HONDA</span><span>JEEP</span><span>RENAULT</span><span>NISSAN</span>
+    <span>CHEVROLET</span><span>VOLKSWAGEN</span><span>FIAT</span><span>FORD</span><span>HYUNDAI</span><span>TOYOTA</span><span>HONDA</span><span>JEEP</span><span>RENAULT</span><span>NISSAN</span>
+  </div>
+</div>
+
+<!-- DIFERENCIAIS -->
+<section class="section" id="diferenciais">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Por que a ABC Multimarcas</span>
+      <h2>Feito para quem não quer <span class="text-red">perder tempo</span></h2>
+      <p>Compramos, vendemos e entregamos veículos com a segurança e a agilidade que o mercado atual exige.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="feature-card" data-reveal>
+        <div class="feature-icon"><i class="fa-solid fa-magnifying-glass-dollar"></i></div>
+        <h3>Avaliação Transparente</h3>
+        <p>Laudo cautelar em todos os veículos e histórico completo sem letras miúdas.</p>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-icon"><i class="fa-solid fa-credit-card"></i></div>
+        <h3>Financiamento Facilitado</h3>
+        <p>Parcelas que cabem no seu bolso, com aprovação rápida nos principais bancos.</p>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-icon"><i class="fa-solid fa-arrows-rotate"></i></div>
+        <h3>Aceitamos sua Troca</h3>
+        <p>Avaliamos seu usado na hora e usamos como parte de pagamento no novo negócio.</p>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
+        <h3>Atendimento Consultivo</h3>
+        <p>Nada de vendedor chato. Um consultor te ajuda a encontrar o carro certo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VEÍCULOS -->
+<section class="section section-alt" id="veiculos">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Estoque selecionado</span>
+      <h2>Destaques da <span class="text-red">semana</span></h2>
+      <p>Uma amostra do que temos disponível. O restante do estoque, nosso consultor te mostra no WhatsApp.</p>
+    </div>
+
+    <div class="cars-grid">
+
+      <article class="car-card" data-reveal>
+        <div class="car-card-top">
+          <span class="car-tag">Seminovo</span>
+          <svg viewBox="0 0 300 150" class="car-thumb">
+            <rect width="300" height="150" fill="#111"/>
+            <path d="M20 100 C20 80 45 75 70 68 L95 45 C102 38 115 33 130 33 L200 33 C215 33 227 40 234 51 L250 70 C280 73 290 82 290 98 C290 110 282 116 270 116 L250 116 C250 103 240 93 227 93 C214 93 204 103 204 116 L110 116 C110 103 100 93 87 93 C74 93 64 103 64 116 L42 116 C28 116 20 112 20 100 Z" fill="#252525" stroke="#e30613" stroke-width="1.5"/>
+            <circle cx="87" cy="116" r="17" fill="#0a0a0a" stroke="#444" stroke-width="3"/>
+            <circle cx="227" cy="116" r="17" fill="#0a0a0a" stroke="#444" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="car-card-body">
+          <h3>Compacto 1.0 Turbo</h3>
+          <ul class="car-specs">
+            <li><i class="fa-solid fa-calendar"></i> 2022/2023</li>
+            <li><i class="fa-solid fa-gauge-high"></i> 34.500 km</li>
+            <li><i class="fa-solid fa-gas-pump"></i> Flex</li>
+          </ul>
+          <div class="car-price">
+            <span>a partir de</span>
+            <strong>R$ 79.990</strong>
+          </div>
+          <a href="#lead-form" class="btn btn-outline btn-block" onclick="document.getElementById('interesse').value='Compacto 1.0 Turbo'">Tenho Interesse</a>
+        </div>
+      </article>
+
+      <article class="car-card featured" data-reveal>
+        <div class="car-card-top">
+          <span class="car-tag hot">Mais procurado</span>
+          <svg viewBox="0 0 300 150" class="car-thumb">
+            <rect width="300" height="150" fill="#111"/>
+            <path d="M15 105 C15 82 42 76 68 66 L92 40 C100 31 116 25 133 25 L205 25 C222 25 236 33 244 46 L262 68 C286 72 295 82 295 100 C295 112 286 118 273 118 L252 118 C252 104 241 93 227 93 C213 93 202 104 202 118 L105 118 C105 104 94 93 80 93 C66 93 55 104 55 118 L37 118 C22 118 15 115 15 105 Z" fill="#2c2c2c" stroke="#e30613" stroke-width="2"/>
+            <circle cx="80" cy="118" r="18" fill="#0a0a0a" stroke="#e30613" stroke-width="3"/>
+            <circle cx="227" cy="118" r="18" fill="#0a0a0a" stroke="#e30613" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="car-card-body">
+          <h3>SUV Compacto 1.6 AT</h3>
+          <ul class="car-specs">
+            <li><i class="fa-solid fa-calendar"></i> 2023/2024</li>
+            <li><i class="fa-solid fa-gauge-high"></i> 18.200 km</li>
+            <li><i class="fa-solid fa-gas-pump"></i> Flex</li>
+          </ul>
+          <div class="car-price">
+            <span>a partir de</span>
+            <strong>R$ 118.900</strong>
+          </div>
+          <a href="#lead-form" class="btn btn-primary btn-block" onclick="document.getElementById('interesse').value='SUV Compacto 1.6 AT'">Tenho Interesse</a>
+        </div>
+      </article>
+
+      <article class="car-card" data-reveal>
+        <div class="car-card-top">
+          <span class="car-tag">0km</span>
+          <svg viewBox="0 0 300 150" class="car-thumb">
+            <rect width="300" height="150" fill="#111"/>
+            <path d="M18 102 C18 80 44 74 69 65 L94 42 C102 34 117 29 133 29 L198 29 C214 29 227 36 235 48 L253 68 C280 71 292 81 292 98 C292 110 283 116 271 116 L250 116 C250 103 239 92 226 92 C213 92 202 103 202 116 L108 116 C108 103 97 92 84 92 C71 92 60 103 60 116 L40 116 C27 116 18 113 18 102 Z" fill="#1c1c1c" stroke="#e30613" stroke-width="1.5"/>
+            <circle cx="84" cy="116" r="17" fill="#0a0a0a" stroke="#444" stroke-width="3"/>
+            <circle cx="226" cy="116" r="17" fill="#0a0a0a" stroke="#444" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="car-card-body">
+          <h3>Sedan 2.0 Automático</h3>
+          <ul class="car-specs">
+            <li><i class="fa-solid fa-calendar"></i> 2024</li>
+            <li><i class="fa-solid fa-gauge-high"></i> 0 km</li>
+            <li><i class="fa-solid fa-gas-pump"></i> Flex</li>
+          </ul>
+          <div class="car-price">
+            <span>a partir de</span>
+            <strong>R$ 142.500</strong>
+          </div>
+          <a href="#lead-form" class="btn btn-outline btn-block" onclick="document.getElementById('interesse').value='Sedan 2.0 Automático'">Tenho Interesse</a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="center-cta" data-reveal>
+      <a href="#lead-form" class="btn btn-primary btn-lg">Ver Estoque Completo com um Consultor</a>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="section" id="como-funciona">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Simples assim</span>
+      <h2>Do interesse ao <span class="text-red">carro na garagem</span></h2>
+    </div>
+
+    <div class="steps">
+      <div class="step" data-reveal>
+        <div class="step-number">01</div>
+        <h3>Você nos conta o que procura</h3>
+        <p>Preenche o formulário rápido ou chama no WhatsApp.</p>
+      </div>
+      <div class="step" data-reveal>
+        <div class="step-number">02</div>
+        <h3>Um consultor te retorna</h3>
+        <p>Em minutos, com opções reais dentro do seu orçamento.</p>
+      </div>
+      <div class="step" data-reveal>
+        <div class="step-number">03</div>
+        <h3>Test-drive e negociação</h3>
+        <p>Você vem até a loja, testa o carro e fechamos as condições.</p>
+      </div>
+      <div class="step" data-reveal>
+        <div class="step-number">04</div>
+        <h3>Saia dirigindo</h3>
+        <p>Documentação resolvida por nós. Você só aproveita.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="section section-alt" id="depoimentos">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Quem comprou, aprovou</span>
+      <h2>O que dizem nossos <span class="text-red">clientes</span></h2>
+    </div>
+
+    <div class="testimonials" data-reveal>
+      <div class="testimonial-track" id="testiTrack">
+        <div class="testimonial-card">
+          <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p>"Comprei meu SUV em menos de uma semana. Atendimento rápido e sem enrolação, recomendo demais."</p>
+          <div class="testimonial-author"><span class="avatar">MR</span><div><strong>Marcos R.</strong><small>Comprou um SUV 1.6</small></div></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p>"Dei meu usado na troca e ainda saí com um carro melhor pagando pouco a mais. Negócio justo."</p>
+          <div class="testimonial-author"><span class="avatar">CS</span><div><strong>Camila S.</strong><small>Trocou de veículo</small></div></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p>"Financiamento aprovado na hora. Equipe explicou tudo certinho, sem letra miúda."</p>
+          <div class="testimonial-author"><span class="avatar">JP</span><div><strong>João P.</strong><small>Financiou um sedan</small></div></div>
+        </div>
+      </div>
+      <div class="testimonial-dots" id="testiDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD FORM -->
+<section class="section lead-section" id="lead-form">
+  <div class="hero-bg">
+    <div class="grid-overlay"></div>
+  </div>
+  <div class="container lead-inner">
+    <div class="lead-text" data-reveal>
+      <span class="eyebrow">Fale agora com a gente</span>
+      <h2>Pronto pra sair <span class="text-red">dirigindo</span>?</h2>
+      <p>Deixe seus dados que um consultor da ABC Multimarcas te chama em minutos. Sem compromisso, sem spam.</p>
+      <ul class="lead-benefits">
+        <li><i class="fa-solid fa-check"></i> Resposta em até 15 minutos em horário comercial</li>
+        <li><i class="fa-solid fa-check"></i> Simulação de financiamento gratuita</li>
+        <li><i class="fa-solid fa-check"></i> Avaliação do seu usado sem custo</li>
+      </ul>
+      <a href="https://wa.me/5500000000000" target="_blank" rel="noopener" class="btn btn-whatsapp">
+        <i class="fa-brands fa-whatsapp"></i> Prefiro chamar no WhatsApp
+      </a>
+    </div>
+
+    <form class="lead-form-card" id="leadForm" data-reveal novalidate>
+      <h3>Receba uma proposta agora</h3>
+
+      <div class="form-row">
+        <label>Nome completo</label>
+        <input type="text" name="nome" placeholder="Como podemos te chamar?" required>
+        <span class="error-msg">Digite seu nome</span>
+      </div>
+
+      <div class="form-row">
+        <label>WhatsApp</label>
+        <input type="tel" name="whatsapp" id="whatsappInput" placeholder="(00) 00000-0000" required>
+        <span class="error-msg">Digite um número válido</span>
+      </div>
+
+      <div class="form-row">
+        <label>E-mail</label>
+        <input type="email" name="email" placeholder="seu@email.com" required>
+        <span class="error-msg">Digite um e-mail válido</span>
+      </div>
+
+      <div class="form-row">
+        <label>Veículo de interesse</label>
+        <input type="text" name="interesse" id="interesse" placeholder="Ex: SUV, Sedan, até R$100.000...">
+      </div>
+
+      <label class="checkbox-row">
+        <input type="checkbox" required>
+        <span>Aceito ser contatado e concordo com a Política de Privacidade.</span>
+      </label>
+
+      <button type="submit" class="btn btn-primary btn-lg btn-block">
+        <span class="btn-text">Quero Receber uma Proposta</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+
+      <p class="form-note"><i class="fa-solid fa-lock"></i> Seus dados estão seguros e não serão compartilhados.</p>
+    </form>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Tire suas dúvidas</span>
+      <h2>Perguntas <span class="text-red">frequentes</span></h2>
+    </div>
+
+    <div class="faq-list" data-reveal>
+      <div class="faq-item">
+        <button class="faq-question">É seguro comprar um seminovo na loja? <i class="fa-solid fa-plus"></i></button>
+        <div class="faq-answer"><p>Sim. Todos os veículos passam por vistoria cautelar e laudo técnico antes de entrarem no nosso estoque, com histórico de procedência disponível para consulta.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Vocês aceitam meu carro usado na troca? <i class="fa-solid fa-plus"></i></button>
+        <div class="faq-answer"><p>Aceitamos! Fazemos uma avaliação gratuita e usamos o valor do seu veículo como entrada ou parte do pagamento.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Como funciona o financiamento? <i class="fa-solid fa-plus"></i></button>
+        <div class="faq-answer"><p>Trabalhamos com os principais bancos e financeiras do mercado. Você preenche uma simulação rápida e recebemos o retorno de aprovação em poucas horas.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Preciso ir até a loja para negociar? <i class="fa-solid fa-plus"></i></button>
+        <div class="faq-answer"><p>Você pode iniciar toda a negociação pelo WhatsApp. A visita à loja é recomendada apenas para o test-drive e assinatura final.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <div class="logo">ABC<span>MULTIMARCAS</span></div>
+      <p>Sua loja de confiança para comprar e vender veículos com segurança, agilidade e as melhores condições do mercado.</p>
+      <div class="socials">
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://wa.me/5500000000000" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navegação</h4>
+      <a href="#diferenciais">Diferenciais</a>
+      <a href="#veiculos">Veículos</a>
+      <a href="#depoimentos">Depoimentos</a>
+      <a href="#faq">Dúvidas</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <a href="tel:+5500000000000"><i class="fa-solid fa-phone"></i> (00) 00000-0000</a>
+      <a href="mailto:contato@abcmultimarcas.com.br"><i class="fa-solid fa-envelope"></i> contato@abcmultimarcas.com.br</a>
+      <a href="#"><i class="fa-solid fa-location-dot"></i> Av. Principal, 1000 - Centro</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; <span id="year"></span> ABC Multimarcas. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/5500000000000" target="_blank" rel="noopener" class="float-whatsapp" aria-label="Fale no WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+  <span class="pulse-ring"></span>
+</a>
+
+<!-- Success toast -->
+<div class="toast" id="toast">
+  <i class="fa-solid fa-circle-check"></i>
+  <div>
+    <strong>Recebemos seus dados!</strong>
+    <span>Um consultor vai te chamar em breve.</span>
+  </div>
+</div>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>
