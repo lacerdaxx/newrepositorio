@@ -1,4 +1,4 @@
-// ===================== ABC MULTIMARCAS — SCRIPT =====================
+// ===================== ACELERADOR 6D — SCRIPT =====================
 document.addEventListener('DOMContentLoaded', () => {
 
   /* Loader */
@@ -55,19 +55,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
   revealEls.forEach(el => revealObserver.observe(el));
 
-  /* Animated counters */
+  /* Animated counters (supports data-prefix, e.g. "R$ ") */
   const counters = document.querySelectorAll('[data-counter]');
   const animateCounter = (el) => {
     const target = parseFloat(el.getAttribute('data-counter'));
+    const prefix = el.getAttribute('data-prefix') || '';
     const duration = 1600;
     const start = performance.now();
     const step = (now) => {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       const value = Math.floor(eased * target);
-      el.textContent = value.toLocaleString('pt-BR');
+      el.textContent = prefix + value.toLocaleString('pt-BR');
       if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = target.toLocaleString('pt-BR');
+      else el.textContent = prefix + target.toLocaleString('pt-BR');
     };
     requestAnimationFrame(step);
   };
@@ -125,6 +126,62 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  /* Modules accordion (first one open by default) */
+  const moduleItems = document.querySelectorAll('.module-item');
+  moduleItems.forEach(item => {
+    const question = item.querySelector('.module-question');
+    const answer = item.querySelector('.module-answer');
+    if (item.classList.contains('active')) {
+      requestAnimationFrame(() => { answer.style.maxHeight = answer.scrollHeight + 'px'; });
+    }
+    question.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+      moduleItems.forEach(other => {
+        other.classList.remove('active');
+        other.querySelector('.module-answer').style.maxHeight = null;
+      });
+      if (!isActive) {
+        item.classList.add('active');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    });
+  });
+
+  /* Evergreen countdown (resets every 24h per visitor, persisted locally) */
+  const cHours = document.getElementById('cHours');
+  const cMinutes = document.getElementById('cMinutes');
+  const cSeconds = document.getElementById('cSeconds');
+
+  if (cHours && cMinutes && cSeconds) {
+    const STORAGE_KEY = 'acelerador6d_deadline';
+    const WINDOW_MS = 24 * 60 * 60 * 1000;
+    let deadline = Number(localStorage.getItem(STORAGE_KEY));
+
+    if (!deadline || deadline < Date.now()) {
+      deadline = Date.now() + WINDOW_MS;
+      try { localStorage.setItem(STORAGE_KEY, String(deadline)); } catch (e) { /* storage unavailable */ }
+    }
+
+    const pad = (n) => String(n).padStart(2, '0');
+
+    const tick = () => {
+      const diff = deadline - Date.now();
+      if (diff <= 0) {
+        deadline = Date.now() + WINDOW_MS;
+        try { localStorage.setItem(STORAGE_KEY, String(deadline)); } catch (e) { /* storage unavailable */ }
+      }
+      const remaining = Math.max(deadline - Date.now(), 0);
+      const hours = Math.floor(remaining / (1000 * 60 * 60));
+      const minutes = Math.floor((remaining / (1000 * 60)) % 60);
+      const seconds = Math.floor((remaining / 1000) % 60);
+      cHours.textContent = pad(hours);
+      cMinutes.textContent = pad(minutes);
+      cSeconds.textContent = pad(seconds);
+    };
+    tick();
+    setInterval(tick, 1000);
+  }
 
   /* WhatsApp phone mask */
   const whatsappInput = document.getElementById('whatsappInput');
