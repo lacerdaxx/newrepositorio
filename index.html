@@ -57,6 +57,7 @@
 <!-- HERO -->
 <section class="hero" id="topo">
   <div class="hero-bg">
+    <div class="office-ambient"></div>
     <div class="grid-overlay"></div>
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -237,11 +238,10 @@
       <h2>Garanta seu acesso <span class="text-red">hoje</span></h2>
     </div>
 
-    <div class="countdown" data-reveal>
+    <div class="countdown" id="countdownWrap" data-reveal>
       <i class="fa-solid fa-clock"></i>
       <span>Essa condição expira em</span>
       <div class="countdown-timer" id="countdownTimer">
-        <div class="c-block"><strong id="cHours">00</strong><small>Horas</small></div>:
         <div class="c-block"><strong id="cMinutes">00</strong><small>Min</small></div>:
         <div class="c-block"><strong id="cSeconds">00</strong><small>Seg</small></div>
       </div>
@@ -368,6 +368,18 @@
   <i class="fa-brands fa-whatsapp"></i>
   <span class="pulse-ring"></span>
 </a>
+
+<!-- Pop-up de prova social -->
+<div class="social-proof" id="socialProof">
+  <div class="social-proof-avatar" id="spAvatar"></div>
+  <div class="social-proof-text">
+    <strong id="spTitle"></strong>
+    <span id="spSubtitle"></span>
+  </div>
+  <button class="social-proof-close" id="spClose" aria-label="Fechar">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+</div>
 
 <script src="assets/js/script.js"></script>
 </body>

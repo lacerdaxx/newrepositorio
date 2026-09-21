@@ -72,14 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* Evergreen countdown (resets every 24h per visitor, persisted locally) */
-  const cHours = document.getElementById('cHours');
+  /* Evergreen countdown (resets a few minutes after expiring, persisted locally) */
+  const countdownWrap = document.getElementById('countdownWrap');
   const cMinutes = document.getElementById('cMinutes');
   const cSeconds = document.getElementById('cSeconds');
 
-  if (cHours && cMinutes && cSeconds) {
+  if (cMinutes && cSeconds) {
     const STORAGE_KEY = 'informaticatotal_deadline';
-    const WINDOW_MS = 24 * 60 * 60 * 1000;
+    const WINDOW_MS = 15 * 60 * 1000; // 15 minutos: janela curta para reforçar urgência
     let deadline = Number(localStorage.getItem(STORAGE_KEY));
 
     if (!deadline || deadline < Date.now()) {
@@ -96,15 +96,82 @@ document.addEventListener('DOMContentLoaded', () => {
         try { localStorage.setItem(STORAGE_KEY, String(deadline)); } catch (e) { /* storage unavailable */ }
       }
       const remaining = Math.max(deadline - Date.now(), 0);
-      const hours = Math.floor(remaining / (1000 * 60 * 60));
-      const minutes = Math.floor((remaining / (1000 * 60)) % 60);
+      const minutes = Math.floor(remaining / (1000 * 60));
       const seconds = Math.floor((remaining / 1000) % 60);
-      cHours.textContent = pad(hours);
       cMinutes.textContent = pad(minutes);
       cSeconds.textContent = pad(seconds);
+      if (countdownWrap) countdownWrap.classList.toggle('urgent', remaining <= 60000);
     };
     tick();
     setInterval(tick, 1000);
+  }
+
+  /* Pop-up de prova social (rotina de exemplos ilustrativos) */
+  const socialProof = document.getElementById('socialProof');
+  if (socialProof) {
+    const spAvatar = document.getElementById('spAvatar');
+    const spTitle = document.getElementById('spTitle');
+    const spSubtitle = document.getElementById('spSubtitle');
+    const spClose = document.getElementById('spClose');
+
+    const purchases = [
+      ['Mariana', 'Curitiba'], ['Carlos', 'Salvador'], ['Fernanda', 'Recife'],
+      ['Bruno', 'Porto Alegre'], ['Juliana', 'Belo Horizonte'], ['Rafael', 'Fortaleza'],
+      ['Camila', 'Brasília'], ['Lucas', 'Campinas'], ['Patrícia', 'Goiânia'], ['Rodrigo', 'Manaus'],
+    ];
+    const timesAgo = ['agora mesmo', 'há 1 minuto', 'há 2 minutos', 'há 3 minutos', 'há 5 minutos'];
+
+    let lastIndex = -1;
+    const buildEntry = () => {
+      // 1 a cada 3 avisos mostra o total de visualizações; o resto simula garantias recentes
+      if (Math.random() < 0.33) {
+        const viewers = 14 + Math.floor(Math.random() * 29);
+        return {
+          initials: '👀',
+          title: `${viewers} pessoas estão vendo este curso agora`,
+          subtitle: 'Nas últimas horas',
+        };
+      }
+      let i = Math.floor(Math.random() * purchases.length);
+      if (i === lastIndex) i = (i + 1) % purchases.length;
+      lastIndex = i;
+      const [name, city] = purchases[i];
+      const when = timesAgo[Math.floor(Math.random() * timesAgo.length)];
+      return {
+        initials: name.charAt(0),
+        title: `${name} de ${city} garantiu a vaga`,
+        subtitle: when,
+      };
+    };
+
+    let cycleTimer = null;
+    let hideTimer = null;
+
+    const showNext = () => {
+      const entry = buildEntry();
+      spAvatar.textContent = entry.initials;
+      spTitle.textContent = entry.title;
+      spSubtitle.textContent = entry.subtitle;
+      socialProof.classList.add('show');
+      hideTimer = setTimeout(() => {
+        socialProof.classList.remove('show');
+        scheduleNext();
+      }, 5000);
+    };
+
+    const scheduleNext = () => {
+      const delay = 8000 + Math.random() * 6000;
+      cycleTimer = setTimeout(showNext, delay);
+    };
+
+    spClose.addEventListener('click', () => {
+      socialProof.classList.remove('show');
+      clearTimeout(hideTimer);
+      clearTimeout(cycleTimer);
+      scheduleNext();
+    });
+
+    scheduleNext();
   }
 
 });
