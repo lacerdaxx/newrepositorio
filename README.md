@@ -29,6 +29,6 @@ python3 -m http.server 8000
 
 ## Personalização rápida
 
-- **Cores**: variáveis `--red`, `--black` etc. no topo de `assets/css/style.css`.
+- **Cores**: variáveis `--red`, `--green`, `--black` etc. no topo de `assets/css/style.css`. O valor da oferta (`R$ 19,90`) usa `--green` propositalmente para destacar do restante do tema vermelho.
 - **Countdown**: timer evergreen de 24h por visitante (`assets/js/script.js`, `STORAGE_KEY`/`WINDOW_MS`). Troque por uma data fixa se preferir uma campanha com prazo real.
-- **Imagem do produto**: o mockup do hero (laptop com logo do Windows + ícones do Word/Excel/PowerPoint flutuando) é feito em HTML/CSS puro, inspirado na arte de referência enviada. Para usar uma imagem real do produto, substitua o bloco `.office-stage` em `index.html` por uma `<img>`.
+- **Imagem do produto**: `assets/img/produto-informatica-3d.webp` é a arte enviada pelo cliente, exibida no hero (`.product-photo`) com leve inclinação 3D (`perspective`/`rotateY`/`rotateX`) e animação de flutuação (`@keyframes productFloat`). Para trocar a imagem, basta substituir esse arquivo (mantendo o nome) ou apontar o `src` da `<img class="product-photo">` para outro arquivo.
