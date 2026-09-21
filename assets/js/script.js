@@ -1,4 +1,4 @@
-// ===================== ACELERADOR 6D — SCRIPT =====================
+// ===================== INFORMÁTICA TOTAL — SCRIPT =====================
 document.addEventListener('DOMContentLoaded', () => {
 
   /* Loader */
@@ -55,61 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
   revealEls.forEach(el => revealObserver.observe(el));
 
-  /* Animated counters (supports data-prefix, e.g. "R$ ") */
-  const counters = document.querySelectorAll('[data-counter]');
-  const animateCounter = (el) => {
-    const target = parseFloat(el.getAttribute('data-counter'));
-    const prefix = el.getAttribute('data-prefix') || '';
-    const duration = 1600;
-    const start = performance.now();
-    const step = (now) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const value = Math.floor(eased * target);
-      el.textContent = prefix + value.toLocaleString('pt-BR');
-      if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = prefix + target.toLocaleString('pt-BR');
-    };
-    requestAnimationFrame(step);
-  };
-  const counterObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateCounter(entry.target);
-        counterObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 });
-  counters.forEach(el => counterObserver.observe(el));
-
-  /* Testimonials slider */
-  const track = document.getElementById('testiTrack');
-  const dotsWrap = document.getElementById('testiDots');
-  if (track && dotsWrap) {
-    const slides = track.children.length;
-    let current = 0;
-
-    for (let i = 0; i < slides; i++) {
-      const dot = document.createElement('span');
-      if (i === 0) dot.classList.add('active');
-      dot.addEventListener('click', () => goTo(i));
-      dotsWrap.appendChild(dot);
-    }
-    const dots = dotsWrap.querySelectorAll('span');
-
-    function goTo(index) {
-      current = index;
-      track.style.transform = `translateX(-${index * 100}%)`;
-      dots.forEach((d, i) => d.classList.toggle('active', i === index));
-    }
-
-    let autoplay = setInterval(() => goTo((current + 1) % slides), 5000);
-    dotsWrap.addEventListener('mouseenter', () => clearInterval(autoplay));
-    dotsWrap.addEventListener('mouseleave', () => {
-      autoplay = setInterval(() => goTo((current + 1) % slides), 5000);
-    });
-  }
-
   /* FAQ accordion */
   document.querySelectorAll('.faq-item').forEach(item => {
     const question = item.querySelector('.faq-question');
@@ -127,34 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* Modules accordion (first one open by default) */
-  const moduleItems = document.querySelectorAll('.module-item');
-  moduleItems.forEach(item => {
-    const question = item.querySelector('.module-question');
-    const answer = item.querySelector('.module-answer');
-    if (item.classList.contains('active')) {
-      requestAnimationFrame(() => { answer.style.maxHeight = answer.scrollHeight + 'px'; });
-    }
-    question.addEventListener('click', () => {
-      const isActive = item.classList.contains('active');
-      moduleItems.forEach(other => {
-        other.classList.remove('active');
-        other.querySelector('.module-answer').style.maxHeight = null;
-      });
-      if (!isActive) {
-        item.classList.add('active');
-        answer.style.maxHeight = answer.scrollHeight + 'px';
-      }
-    });
-  });
-
   /* Evergreen countdown (resets every 24h per visitor, persisted locally) */
   const cHours = document.getElementById('cHours');
   const cMinutes = document.getElementById('cMinutes');
   const cSeconds = document.getElementById('cSeconds');
 
   if (cHours && cMinutes && cSeconds) {
-    const STORAGE_KEY = 'acelerador6d_deadline';
+    const STORAGE_KEY = 'informaticatotal_deadline';
     const WINDOW_MS = 24 * 60 * 60 * 1000;
     let deadline = Number(localStorage.getItem(STORAGE_KEY));
 
