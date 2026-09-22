@@ -23,20 +23,6 @@ export default function Hero() {
             </span>
           </Reveal>
 
-          <Reveal delay={40}>
-            <div className="mt-5 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] py-1.5 pl-1.5 pr-4 backdrop-blur">
-              <img
-                src={photo}
-                alt="Representante do Efeitos PRO+"
-                className="h-8 w-8 rounded-full border border-red-400/40 object-cover shadow-red-sm"
-                style={{ objectPosition: "50% 12%" }}
-              />
-              <span className="text-xs font-semibold text-white/90">
-                Apresentado por <span className="text-red-400">Nome do representante</span>
-              </span>
-            </div>
-          </Reveal>
-
           <Reveal delay={80}>
             <h1 className="mt-6 text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-[4rem]">
               SEUS VÍDEOS
@@ -70,22 +56,31 @@ export default function Hero() {
           </Reveal>
         </div>
 
-        {/* Visual mockup */}
+        {/* Visual: representative photo + editor mockup */}
         <Reveal delay={200} className="relative">
-          <div className="relative mx-auto max-w-md lg:max-w-none">
-            {/* floating badges */}
-            <div className="animate-float-slow absolute -left-4 top-6 z-20 hidden items-center gap-1.5 rounded-lg border border-red-400/30 bg-ink-900/90 px-3 py-1.5 text-[11px] font-bold text-red-400 shadow-red-sm backdrop-blur sm:flex">
-              <Sparkles size={12} /> NEW
-            </div>
-            <div className="animate-float absolute -right-3 top-24 z-20 hidden items-center gap-1.5 rounded-lg border border-white/15 bg-ink-900/90 px-3 py-1.5 text-[11px] font-bold text-white/90 shadow-card backdrop-blur sm:flex">
-              <Wand2 size={12} className="text-red-400" /> FX
-            </div>
-            <div className="animate-float-slow absolute -bottom-6 -left-6 z-20 hidden items-center gap-1.5 rounded-lg border border-red-400/30 bg-ink-900/90 px-3 py-1.5 text-[11px] font-bold text-red-400 shadow-red-sm backdrop-blur sm:flex">
-              <Zap size={12} fill="currentColor" /> PRO
+          <div className="relative mx-auto max-w-sm lg:max-w-none lg:pb-14">
+            {/* Representative photo — featured visual */}
+            <div className="animate-float-slow relative mx-auto w-full max-w-[300px] sm:max-w-[340px] lg:mx-0 lg:max-w-[380px]">
+              <div className="pointer-events-none absolute inset-x-8 bottom-6 top-10 rounded-[2rem] bg-red-500/25 blur-3xl" />
+              <img
+                src={photo}
+                alt="Representante do Efeitos PRO+"
+                className="relative z-10 mx-auto w-full drop-shadow-[0_20px_45px_rgba(0,0,0,0.7)]"
+              />
+              <span className="absolute -right-2 top-6 z-20 flex items-center gap-1.5 rounded-lg border border-red-400/30 bg-ink-900/90 px-3 py-1.5 text-[11px] font-bold text-red-400 shadow-red-sm backdrop-blur">
+                <Sparkles size={12} /> Apresenta
+              </span>
             </div>
 
-            {/* editor window */}
-            <div className="glass-card relative overflow-hidden shadow-card transition-transform duration-500 hover:-translate-y-1">
+            {/* editor mockup — layered card */}
+            <div className="relative z-20 mx-auto mt-6 w-full max-w-[260px] lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:max-w-[250px]">
+              {/* floating badge */}
+              <div className="animate-float absolute -right-3 -top-4 z-20 hidden items-center gap-1.5 rounded-lg border border-white/15 bg-ink-900/90 px-3 py-1.5 text-[11px] font-bold text-white/90 shadow-card backdrop-blur sm:flex">
+                <Wand2 size={12} className="text-red-400" /> FX
+              </div>
+
+              {/* editor window */}
+              <div className="glass-card relative overflow-hidden shadow-card transition-transform duration-500 hover:-translate-y-1">
               <div className="flex items-center justify-between border-b border-white/10 bg-ink-900/60 px-4 py-3">
                 <div className="flex items-center gap-1.5">
                   <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
@@ -150,11 +145,11 @@ export default function Hero() {
                     />
                   ))}
                 </div>
-                <div className="mt-2.5 flex gap-2">
+                <div className="mt-2.5 flex flex-wrap gap-1.5">
                   {["Efeitos", "Transições", "Áudio", "Texto"].map((tab, i) => (
                     <span
                       key={tab}
-                      className={`rounded-md px-2.5 py-1 text-[10px] font-semibold ${
+                      className={`rounded-md px-2 py-1 text-[9px] font-semibold ${
                         i === 0
                           ? "bg-red-500/20 text-red-400"
                           : "bg-white/5 text-ink-400"
@@ -166,6 +161,7 @@ export default function Hero() {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </Reveal>
       </div>
