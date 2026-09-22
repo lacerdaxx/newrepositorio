@@ -1,6 +1,7 @@
 import { ArrowRight, Play, Sparkles, Wand2, Zap, Music4, Film } from "lucide-react";
 import { PURCHASE_URL } from "../config";
 import Reveal from "./ui/Reveal";
+import photo from "../assets/representante.webp";
 
 const WAVE_HEIGHTS = [30, 55, 40, 70, 45, 90, 60, 35, 75, 50, 65, 40, 80, 55, 30, 60, 45, 70, 35, 55];
 
@@ -20,6 +21,20 @@ export default function Hero() {
               <Zap size={13} fill="currentColor" />
               Novo pack de efeitos para CapCut
             </span>
+          </Reveal>
+
+          <Reveal delay={40}>
+            <div className="mt-5 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] py-1.5 pl-1.5 pr-4 backdrop-blur">
+              <img
+                src={photo}
+                alt="Representante do Efeitos PRO+"
+                className="h-8 w-8 rounded-full border border-red-400/40 object-cover shadow-red-sm"
+                style={{ objectPosition: "50% 12%" }}
+              />
+              <span className="text-xs font-semibold text-white/90">
+                Apresentado por <span className="text-red-400">Nome do representante</span>
+              </span>
+            </div>
           </Reveal>
 
           <Reveal delay={80}>
