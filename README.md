@@ -1,6 +1,6 @@
 # Informática Total — Landing Page
 
-Landing page de vendas para o curso "Curso Completo de Informática do Zero ao Avançado" (Windows, Word, Excel, PowerPoint e Internet), com design dark (preto e vermelho), animações e funil completo: barra de urgência, hero, o que você vai aprender, 7 bônus, benefícios, oferta com timer e preço, garantia, CTA final com preço e FAQ.
+Landing page de vendas para o curso "Curso Completo de Informática do Zero ao Avançado" (Windows, Word, Excel, PowerPoint e Internet), com design dark (preto e vermelho) e um funil enxuto e direto: barra de urgência, hero, o que você vai aprender, bônus (lista compacta), oferta com timer/preço/garantia e FAQ.
 
 O conteúdo (headline, oferta, bônus, garantia e FAQ) segue o texto fornecido pelo cliente para este produto.
 
@@ -24,7 +24,7 @@ python3 -m http.server 8000
 
 - **Contato**: telefone/WhatsApp (`5500000000000`), e-mail (`contato@informaticatotal.com.br`) e links de redes sociais no header/footer — hoje são placeholders.
 - **Termos de Uso / Política de Privacidade**: links `#` no footer — aponte para as páginas reais.
-- **Checkout**: não há mais formulário — os botões de oferta (`.pricing-card` e o card final em `#garantir-vaga`) são links diretos. Troque os `href="#oferta"` / `href="#checkout"` pelo link real da sua plataforma de pagamento (Hotmart, Kiwify, Eduzz etc.).
+- **Checkout**: o botão do `.pricing-card` (a única oferta da página) é um link direto — troque o `href="#checkout"` pelo link real da sua plataforma de pagamento (Hotmart, Kiwify, Eduzz etc.).
 - **Prazo da garantia**: 7 dias, conforme informado — ajuste se sua plataforma usar outro padrão.
 
 ## Personalização rápida
