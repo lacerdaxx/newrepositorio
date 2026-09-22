@@ -17,7 +17,7 @@ export default function TransformationSection() {
           <span className="section-eyebrow">Antes & depois</span>
           <h2 className="mt-5 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
             DO VÍDEO COMUM AO
-            <br className="hidden sm:block" /> VÍDEO <span className="text-gradient-gold">PROFISSIONAL</span>.
+            <br className="hidden sm:block" /> VÍDEO <span className="text-gradient-red">PROFISSIONAL</span>.
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-ink-300">
             Arraste o controle para comparar. Placeholder ilustrativo — substitua pelos seus
@@ -32,8 +32,8 @@ export default function TransformationSection() {
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-4 sm:grid-cols-4">
           {INDICATORS.map((item, i) => (
             <Reveal key={item.label} delay={i * 80}>
-              <div className="flex flex-col items-center gap-2 rounded-xl border border-white/10 bg-white/[0.02] py-5 text-center">
-                <item.icon size={18} className="text-gold-400" />
+              <div className="group flex flex-col items-center gap-2 rounded-xl border border-white/10 bg-white/[0.02] py-5 text-center transition-all duration-300 hover:-translate-y-0.5 hover:border-red-500/25 hover:bg-white/[0.04]">
+                <item.icon size={18} className="text-red-400 transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-xs font-semibold text-ink-200">{item.label}</span>
               </div>
             </Reveal>

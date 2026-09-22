@@ -33,7 +33,7 @@ export default function FAQ() {
       <div className="container-px mx-auto max-w-3xl">
         <Reveal className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-            AINDA TEM ALGUMA <span className="text-gradient-gold">DÚVIDA</span>?
+            AINDA TEM ALGUMA <span className="text-gradient-red">DÚVIDA</span>?
           </h2>
         </Reveal>
 
@@ -44,7 +44,7 @@ export default function FAQ() {
               <Reveal key={item.q} delay={i * 60}>
                 <div
                   className={`overflow-hidden rounded-2xl border transition-colors duration-300 ${
-                    isOpen ? "border-gold-500/30 bg-white/[0.04]" : "border-white/10 bg-white/[0.02]"
+                    isOpen ? "border-red-500/30 bg-white/[0.04]" : "border-white/10 bg-white/[0.02]"
                   }`}
                 >
                   <button
@@ -56,7 +56,7 @@ export default function FAQ() {
                     <span className="text-sm font-bold text-white sm:text-base">{item.q}</span>
                     <ChevronDown
                       size={18}
-                      className={`shrink-0 text-gold-400 transition-transform duration-300 ${
+                      className={`shrink-0 text-red-400 transition-transform duration-300 ${
                         isOpen ? "rotate-180" : ""
                       }`}
                     />

@@ -7,15 +7,18 @@ export default function Testimonials() {
       <div className="container-px mx-auto max-w-6xl">
         <Reveal className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-            QUEM USA, <span className="text-gradient-gold">SENTE A DIFERENÇA</span>.
+            QUEM USA, <span className="text-gradient-red">SENTE A DIFERENÇA</span>.
           </h2>
         </Reveal>
 
         <div className="mt-14 grid gap-5 sm:grid-cols-3">
           {[1, 2, 3].map((i) => (
             <Reveal key={i} delay={i * 100}>
-              <div className="flex h-full flex-col gap-4 rounded-2xl border border-dashed border-white/15 bg-white/[0.02] p-7">
-                <Quote size={22} className="text-gold-500/40" />
+              <div className="group flex h-full flex-col gap-4 rounded-2xl border border-dashed border-white/15 bg-white/[0.02] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-red-500/30 hover:bg-white/[0.04]">
+                <Quote
+                  size={22}
+                  className="text-red-500/40 transition-transform duration-300 group-hover:scale-110 group-hover:text-red-500/70"
+                />
                 <p className="text-sm italic leading-relaxed text-ink-300">
                   "Adicione aqui um depoimento real de cliente."
                 </p>

@@ -9,8 +9,8 @@ export default function Hero() {
     <section id="top" className="relative overflow-hidden bg-ink-950 pb-20 pt-28 lg:pb-28 lg:pt-36">
       {/* background grid + glow */}
       <div className="pointer-events-none absolute inset-0 bg-grid opacity-40 [mask-image:radial-gradient(ellipse_60%_60%_at_50%_0%,black,transparent)]" />
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-[560px] w-[560px] -translate-x-1/2 rounded-full bg-gold-500/20 blur-[140px]" />
-      <div className="pointer-events-none absolute right-0 top-1/3 h-72 w-72 rounded-full bg-gold-400/10 blur-[100px]" />
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-[560px] w-[560px] -translate-x-1/2 rounded-full bg-red-500/20 blur-[140px]" />
+      <div className="pointer-events-none absolute right-0 top-1/3 h-72 w-72 rounded-full bg-red-400/10 blur-[100px]" />
 
       <div className="container-px relative mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-[1.05fr,0.95fr] lg:gap-10">
         {/* Copy */}
@@ -28,9 +28,9 @@ export default function Hero() {
               <br />
               MERECEM MAIS
               <br />
-              <span className="relative inline-block text-gradient-gold">
+              <span className="relative inline-block text-gradient-red">
                 IMPACTO.
-                <span className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-gradient-to-r from-gold-400/0 via-gold-400 to-gold-400/0" />
+                <span className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-gradient-to-r from-red-400/0 via-red-400 to-red-400/0" />
               </span>
             </h1>
           </Reveal>
@@ -59,18 +59,18 @@ export default function Hero() {
         <Reveal delay={200} className="relative">
           <div className="relative mx-auto max-w-md lg:max-w-none">
             {/* floating badges */}
-            <div className="animate-float-slow absolute -left-4 top-6 z-20 hidden items-center gap-1.5 rounded-lg border border-gold-400/30 bg-ink-900/90 px-3 py-1.5 text-[11px] font-bold text-gold-400 shadow-gold-sm backdrop-blur sm:flex">
+            <div className="animate-float-slow absolute -left-4 top-6 z-20 hidden items-center gap-1.5 rounded-lg border border-red-400/30 bg-ink-900/90 px-3 py-1.5 text-[11px] font-bold text-red-400 shadow-red-sm backdrop-blur sm:flex">
               <Sparkles size={12} /> NEW
             </div>
             <div className="animate-float absolute -right-3 top-24 z-20 hidden items-center gap-1.5 rounded-lg border border-white/15 bg-ink-900/90 px-3 py-1.5 text-[11px] font-bold text-white/90 shadow-card backdrop-blur sm:flex">
-              <Wand2 size={12} className="text-gold-400" /> FX
+              <Wand2 size={12} className="text-red-400" /> FX
             </div>
-            <div className="animate-float-slow absolute -bottom-6 -left-6 z-20 hidden items-center gap-1.5 rounded-lg border border-gold-400/30 bg-ink-900/90 px-3 py-1.5 text-[11px] font-bold text-gold-400 shadow-gold-sm backdrop-blur sm:flex">
+            <div className="animate-float-slow absolute -bottom-6 -left-6 z-20 hidden items-center gap-1.5 rounded-lg border border-red-400/30 bg-ink-900/90 px-3 py-1.5 text-[11px] font-bold text-red-400 shadow-red-sm backdrop-blur sm:flex">
               <Zap size={12} fill="currentColor" /> PRO
             </div>
 
             {/* editor window */}
-            <div className="glass-card relative overflow-hidden shadow-card">
+            <div className="glass-card relative overflow-hidden shadow-card transition-transform duration-500 hover:-translate-y-1">
               <div className="flex items-center justify-between border-b border-white/10 bg-ink-900/60 px-4 py-3">
                 <div className="flex items-center gap-1.5">
                   <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
@@ -78,19 +78,19 @@ export default function Hero() {
                   <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
                 </div>
                 <span className="text-[11px] font-medium text-ink-400">editor.capcut</span>
-                <span className="flex items-center gap-1 rounded-md bg-gold-500/15 px-2 py-0.5 text-[10px] font-bold text-gold-400">
+                <span className="flex items-center gap-1 rounded-md bg-red-500/15 px-2 py-0.5 text-[10px] font-bold text-red-400">
                   PRO+
                 </span>
               </div>
 
               {/* preview canvas */}
               <div className="relative aspect-[9/12] w-full overflow-hidden bg-gradient-to-br from-ink-800 via-ink-900 to-ink-950 sm:aspect-[9/11]">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(232,182,74,0.18),transparent_55%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(228,25,47,0.18),transparent_55%)]" />
                 {/* particles */}
                 {[...Array(14)].map((_, i) => (
                   <span
                     key={i}
-                    className="absolute rounded-full bg-gold-400/70 animate-pulse-glow"
+                    className="absolute rounded-full bg-red-400/70 animate-pulse-glow"
                     style={{
                       width: `${2 + (i % 3)}px`,
                       height: `${2 + (i % 3)}px`,
@@ -110,13 +110,13 @@ export default function Hero() {
 
                 {/* floating effect chips over the canvas */}
                 <div className="absolute left-3 top-3 flex items-center gap-1.5 rounded-lg border border-white/10 bg-ink-950/70 px-2.5 py-1.5 text-[10px] font-semibold text-white backdrop-blur">
-                  <Film size={11} className="text-gold-400" /> Transição Glitch
+                  <Film size={11} className="text-red-400" /> Transição Glitch
                 </div>
                 <div className="absolute right-3 top-16 flex items-center gap-1.5 rounded-lg border border-white/10 bg-ink-950/70 px-2.5 py-1.5 text-[10px] font-semibold text-white backdrop-blur">
-                  <Sparkles size={11} className="text-gold-400" /> Flash Zoom
+                  <Sparkles size={11} className="text-red-400" /> Flash Zoom
                 </div>
                 <div className="absolute bottom-4 left-3 flex items-center gap-1.5 rounded-lg border border-white/10 bg-ink-950/70 px-2.5 py-1.5 text-[10px] font-semibold text-white backdrop-blur">
-                  <Music4 size={11} className="text-gold-400" /> Beat Sync
+                  <Music4 size={11} className="text-red-400" /> Beat Sync
                 </div>
               </div>
 
@@ -126,7 +126,7 @@ export default function Hero() {
                   {WAVE_HEIGHTS.map((h, i) => (
                     <span
                       key={i}
-                      className="animate-wave w-1 rounded-full bg-gradient-to-t from-gold-600 to-gold-400"
+                      className="animate-wave w-1 rounded-full bg-gradient-to-t from-red-600 to-red-400"
                       style={{
                         height: `${h}%`,
                         animationDelay: `${i * 0.06}s`,
@@ -141,7 +141,7 @@ export default function Hero() {
                       key={tab}
                       className={`rounded-md px-2.5 py-1 text-[10px] font-semibold ${
                         i === 0
-                          ? "bg-gold-500/20 text-gold-400"
+                          ? "bg-red-500/20 text-red-400"
                           : "bg-white/5 text-ink-400"
                       }`}
                     >

@@ -13,7 +13,7 @@
   }
 
   ::selection {
-    @apply bg-gold-500/30 text-white;
+    @apply bg-red-500/30 text-white;
   }
 }
 
@@ -23,11 +23,11 @@
   }
 
   .section-eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-gold-400;
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-red-400;
   }
 
   .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-gold-400 to-gold-600 px-7 py-4 text-sm font-bold uppercase tracking-wide text-ink-950 shadow-gold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_50px_-6px_rgba(232,182,74,0.65)] active:translate-y-0;
+    @apply relative inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-red-400 to-red-600 px-7 py-4 text-sm font-bold uppercase tracking-wide text-white shadow-red transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_50px_-6px_rgba(228,25,47,0.65)] active:translate-y-0;
   }
 
   .btn-secondary {
@@ -40,8 +40,8 @@
 }
 
 @layer utilities {
-  .text-gradient-gold {
-    @apply bg-gradient-to-r from-gold-400 via-gold-500 to-gold-400 bg-clip-text text-transparent;
+  .text-gradient-red {
+    @apply bg-gradient-to-r from-red-400 via-red-500 to-red-400 bg-clip-text text-transparent;
   }
 
   .bg-grid {

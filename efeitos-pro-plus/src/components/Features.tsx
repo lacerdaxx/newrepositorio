@@ -50,9 +50,9 @@ export default function Features() {
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((f, i) => (
             <Reveal key={f.title} delay={(i % 3) * 100}>
-              <div className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-gold-500/25 hover:bg-white/[0.04]">
-                <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-gold-500/0 blur-2xl transition-colors duration-300 group-hover:bg-gold-500/15" />
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-ink-900 text-gold-400">
+              <div className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-red-500/25 hover:bg-white/[0.04]">
+                <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-red-500/0 blur-2xl transition-colors duration-300 group-hover:bg-red-500/15" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-ink-900 text-red-400">
                   <f.icon size={20} />
                 </div>
                 <h3 className="mt-5 text-lg font-bold">{f.title}</h3>

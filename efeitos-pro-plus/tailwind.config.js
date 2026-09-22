@@ -16,11 +16,11 @@ export default {
           300: "#9a9aa1",
           200: "#c4c4c9",
         },
-        gold: {
-          400: "#f5cf6b",
-          500: "#e8b64a",
-          600: "#d4a02f",
-          glow: "#f7d78a",
+        red: {
+          400: "#ff4d5e",
+          500: "#e4192f",
+          600: "#b30f22",
+          glow: "#ff8a96",
         },
       },
       fontFamily: {
@@ -28,8 +28,8 @@ export default {
         display: ["'Sora'", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        gold: "0 0 40px -8px rgba(232, 182, 74, 0.45)",
-        "gold-sm": "0 0 20px -6px rgba(232, 182, 74, 0.35)",
+        red: "0 0 40px -8px rgba(228, 25, 47, 0.5)",
+        "red-sm": "0 0 20px -6px rgba(228, 25, 47, 0.4)",
         card: "0 8px 30px -10px rgba(0, 0, 0, 0.6)",
       },
       backgroundImage: {

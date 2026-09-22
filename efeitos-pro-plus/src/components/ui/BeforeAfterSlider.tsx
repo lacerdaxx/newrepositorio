@@ -30,11 +30,11 @@ export default function BeforeAfterSlider() {
     >
       {/* DEPOIS (fundo completo) */}
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-ink-800 via-[#241d0f] to-ink-950">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(232,182,74,0.25),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(228,25,47,0.25),transparent_55%)]" />
         {[...Array(10)].map((_, i) => (
           <span
             key={i}
-            className="absolute rounded-full bg-gold-400/80 animate-pulse-glow"
+            className="absolute rounded-full bg-red-400/80 animate-pulse-glow"
             style={{
               width: 3,
               height: 3,
@@ -44,7 +44,7 @@ export default function BeforeAfterSlider() {
             }}
           />
         ))}
-        <span className="relative rounded-full border border-gold-400/40 bg-ink-950/70 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-gold-400 backdrop-blur">
+        <span className="relative rounded-full border border-red-400/40 bg-ink-950/70 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-red-400 backdrop-blur">
           Depois
         </span>
         <span className="relative text-sm font-medium text-white/80">
@@ -68,7 +68,7 @@ export default function BeforeAfterSlider() {
         className="absolute inset-y-0 z-10 w-0.5 bg-white/70"
         style={{ left: `${position}%` }}
       >
-        <div className="absolute left-1/2 top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-ink-950 text-white shadow-gold-sm">
+        <div className="absolute left-1/2 top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-ink-950 text-white shadow-red-sm">
           <MoveHorizontal size={16} />
         </div>
       </div>

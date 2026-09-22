@@ -38,8 +38,8 @@ export default function ProblemSection() {
         <div className="mt-14 grid gap-5 sm:grid-cols-3">
           {CARDS.map((card, i) => (
             <Reveal key={card.title} delay={i * 100}>
-              <div className="group h-full rounded-2xl border border-white/10 bg-white/[0.02] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-gold-500/25 hover:bg-white/[0.04]">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-ink-900 text-gold-400 transition-colors group-hover:border-gold-500/30">
+              <div className="group h-full rounded-2xl border border-white/10 bg-white/[0.02] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-red-500/25 hover:bg-white/[0.04]">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-ink-900 text-red-400 transition-colors group-hover:border-red-500/30">
                   <card.icon size={20} />
                 </div>
                 <h3 className="mt-5 text-lg font-bold">{card.title}</h3>
@@ -51,7 +51,7 @@ export default function ProblemSection() {
 
         <Reveal delay={300} className="mt-14 text-center">
           <p className="text-xl font-semibold text-white sm:text-2xl">
-            O <span className="text-gradient-gold">EFEITOS PRO+</span> foi criado para simplificar
+            O <span className="text-gradient-red">EFEITOS PRO+</span> foi criado para simplificar
             esse processo.
           </p>
         </Reveal>

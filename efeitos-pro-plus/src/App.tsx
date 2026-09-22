@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import Representative from "./components/Representative";
 import ProblemSection from "./components/ProblemSection";
 import TransformationSection from "./components/TransformationSection";
 import Features from "./components/Features";
@@ -20,6 +21,7 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
+        <Representative />
         <ProblemSection />
         <TransformationSection />
         <Features />

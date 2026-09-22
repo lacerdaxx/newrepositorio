@@ -28,10 +28,10 @@ export default function Navbar() {
     >
       <nav className="container-px mx-auto flex h-16 max-w-7xl items-center justify-between lg:h-20">
         <a href="#top" className="flex items-center gap-2 text-lg font-extrabold tracking-tight">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-gold-400 to-gold-600 text-ink-950 shadow-gold-sm">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-red-400 to-red-600 text-white shadow-red-sm">
             <Zap size={16} strokeWidth={2.5} fill="currentColor" />
           </span>
-          EFEITOS <span className="text-gradient-gold">PRO+</span>
+          EFEITOS <span className="text-gradient-red">PRO+</span>
         </a>
 
         <ul className="hidden items-center gap-9 lg:flex">
