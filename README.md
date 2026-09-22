@@ -1,6 +1,6 @@
 # Informática Total — Landing Page
 
-Landing page de vendas para o curso "Curso Completo de Informática do Zero ao Avançado" (Windows, Word, Excel, PowerPoint e Internet), com design dark (preto e vermelho) e um funil enxuto e direto: barra de urgência, hero, o que você vai aprender, bônus (lista compacta), oferta com timer/preço/garantia e FAQ.
+Landing page de vendas para o curso "Curso Completo de Informática do Zero ao Avançado" (Windows, Word, Excel, PowerPoint e Internet), com design dark (preto e vermelho) e um funil enxuto e direto: barra de urgência, hero (sem menu de navegação), o que você vai aprender, bônus (lista compacta), oferta com timer/preço/selo de garantia e FAQ.
 
 O conteúdo (headline, oferta, bônus, garantia e FAQ) segue o texto fornecido pelo cliente para este produto.
 
@@ -22,10 +22,10 @@ python3 -m http.server 8000
 
 ## O que revisar antes de publicar
 
-- **Contato**: telefone/WhatsApp (`5500000000000`), e-mail (`contato@informaticatotal.com.br`) e links de redes sociais no header/footer — hoje são placeholders.
+- **Contato**: e-mail (`contato@informaticatotal.com.br`) e links de redes sociais no footer — hoje são placeholders. O header não tem mais menu nem botão de WhatsApp flutuante (removidos a pedido).
 - **Termos de Uso / Política de Privacidade**: links `#` no footer — aponte para as páginas reais.
 - **Checkout**: o botão do `.pricing-card` (a única oferta da página) é um link direto — troque o `href="#checkout"` pelo link real da sua plataforma de pagamento (Hotmart, Kiwify, Eduzz etc.).
-- **Prazo da garantia**: 7 dias, conforme informado — ajuste se sua plataforma usar outro padrão.
+- **Prazo da garantia**: 7 dias, conforme informado — ajuste se sua plataforma usar outro padrão. O selo (`.guarantee-badge`) fica fixado no canto do card de preço, em `#oferta`.
 
 ## Personalização rápida
 

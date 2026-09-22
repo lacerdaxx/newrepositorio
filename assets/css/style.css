@@ -107,38 +107,8 @@ p{ margin:0 0 1em; color: var(--gray-light); }
 .header-inner{ display:flex; align-items:center; justify-content:space-between; gap:20px; }
 .logo{ font-family: var(--ff-heading); font-weight:700; font-size:1.3rem; letter-spacing: 1px; white-space:nowrap; }
 .logo span{ color: var(--red); }
-.nav{ display:flex; gap: 32px; }
-.nav a{
-  font-size:.92rem; font-weight:600; color: var(--gray-light);
-  position:relative; padding: 4px 0; transition: color .25s;
-}
-.nav a::after{
-  content:''; position:absolute; left:0; bottom:-2px; width:0; height:2px; background: var(--red);
-  transition: width .3s ease;
-}
-.nav a:hover{ color: #fff; }
-.nav a:hover::after{ width:100%; }
 
 .header-actions{ display:flex; align-items:center; gap:14px; }
-
-.burger{
-  display:none; flex-direction:column; justify-content:center; gap:5px;
-  width:38px; height:38px; background: var(--black-soft); border:1px solid var(--border);
-  border-radius:8px; cursor:pointer;
-}
-.burger span{ display:block; width:16px; height:2px; background:#fff; margin:0 auto; transition: all .3s; }
-.burger.active span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
-.burger.active span:nth-child(2){ opacity:0; }
-.burger.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
-
-.mobile-nav{
-  position: fixed; top:0; right:-100%; width:min(320px,85%); height:100vh; z-index:600;
-  background: var(--black-2); border-left:1px solid var(--border);
-  display:flex; flex-direction:column; gap:22px; padding: 100px 32px 32px;
-  transition: right .4s cubic-bezier(.65,0,.35,1);
-}
-.mobile-nav.active{ right:0; }
-.mobile-nav a{ font-size:1.05rem; font-weight:600; }
 
 /* ===== Buttons ===== */
 .btn{
@@ -397,11 +367,18 @@ p{ margin:0 0 1em; color: var(--gray-light); }
 .pricing-warning i{ color: var(--red); flex-shrink:0; }
 .pricing-note{ display:flex; align-items:center; gap:8px; justify-content:center; text-align:center; font-size:.78rem; color: var(--gray); margin: 16px 0 0; }
 .pricing-note i{ color: var(--red); flex-shrink:0; }
-.pricing-guarantee{
-  display:flex; align-items:center; gap:8px; font-size:.82rem; color: var(--gray-light);
-  margin: 2px 0 18px;
+
+.guarantee-badge{
+  position:absolute; top:-22px; right:-18px; z-index:3;
+  width:86px; height:86px; border-radius:50%;
+  background: linear-gradient(135deg, var(--red), var(--red-glow));
+  border: 3px solid var(--black-2);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  color:#fff; box-shadow: 0 10px 24px rgba(227,6,19,.5);
+  transform: rotate(12deg);
 }
-.pricing-guarantee i{ color: var(--red); flex-shrink:0; }
+.guarantee-badge i{ font-size:1.15rem; margin-bottom:2px; }
+.guarantee-badge span{ font-size:.6rem; font-weight:800; line-height:1.15; text-align:center; letter-spacing:.3px; }
 
 /* ===== FAQ ===== */
 .faq-list{ max-width: 760px; margin: 0 auto; display:flex; flex-direction:column; gap:14px; }
@@ -433,24 +410,6 @@ p{ margin:0 0 1em; color: var(--gray-light); }
 .footer-col a:hover{ color: var(--red); }
 .footer-col i{ color: var(--red); margin-right:6px; }
 .footer-bottom{ border-top:1px solid var(--border); padding: 22px 0; text-align:center; font-size:.8rem; color: var(--gray); }
-
-/* ===== Floating WhatsApp ===== */
-.float-whatsapp{
-  position: fixed; bottom: 26px; right: 26px; z-index: 400;
-  width:60px; height:60px; border-radius:50%; background:#25D366; color:#fff;
-  display:flex; align-items:center; justify-content:center; font-size:1.7rem;
-  box-shadow: 0 10px 30px rgba(37,211,102,.5);
-  transition: transform .3s ease;
-}
-.float-whatsapp:hover{ transform: scale(1.08); }
-.pulse-ring{
-  position:absolute; inset:0; border-radius:50%; border:2px solid #25D366;
-  animation: pulse-ring 2s ease-out infinite;
-}
-@keyframes pulse-ring{
-  0%{ transform: scale(1); opacity:.8; }
-  100%{ transform: scale(1.8); opacity:0; }
-}
 
 /* ===== Social proof pop-up ===== */
 .social-proof{
@@ -493,14 +452,11 @@ p{ margin:0 0 1em; color: var(--gray-light); }
 }
 
 @media (max-width: 768px){
-  .nav{ display:none; }
-  .burger{ display:flex; }
   .cards-grid, .cards-grid.five{ grid-template-columns: 1fr; }
   .bonus-list{ grid-template-columns: 1fr; }
   .footer-inner{ grid-template-columns: 1fr; }
   .section{ padding: 80px 0; }
   .hero{ padding-top: 168px; }
-  .header-actions .btn-sm{ display:none; }
   .floating-badge{ display:none; }
   .urgency-bar{ font-size:.72rem; padding:8px 10px; }
   .header{ top:34px; }

@@ -19,20 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* Mobile nav */
-  const burger = document.getElementById('burger');
-  const mobileNav = document.getElementById('mobileNav');
-  burger.addEventListener('click', () => {
-    burger.classList.toggle('active');
-    mobileNav.classList.toggle('active');
-  });
-  mobileNav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      burger.classList.remove('active');
-      mobileNav.classList.remove('active');
-    });
-  });
-
   /* Cursor glow (desktop only) */
   const cursorGlow = document.getElementById('cursorGlow');
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
