@@ -10,23 +10,17 @@ import GrowthBars from "./ui/GrowthBars";
 import { siteConfig } from "@/config/site";
 import { EASE } from "@/lib/motion";
 
+const TITLE_PLAIN = "Pare de depender de indicação. Tenha agenda cheia de orçamentos";
+const TITLE_GOLD = "direto com o dono da casa";
 const title: { w: string; gold?: boolean }[] = [
-  { w: "Agenda" },
-  { w: "cheia" },
-  { w: "de" },
-  { w: "orçamentos" },
-  { w: "direto", gold: true },
-  { w: "com", gold: true },
-  { w: "o", gold: true },
-  { w: "dono", gold: true },
-  { w: "da", gold: true },
-  { w: "casa", gold: true },
+  ...TITLE_PLAIN.split(" ").map((w) => ({ w })),
+  ...TITLE_GOLD.split(" ").map((w) => ({ w, gold: true })),
 ];
 
 const badges = [
-  { icon: Languages, label: "Atendimento em português" },
-  { icon: ShieldCheck, label: "Leads exclusivos" },
-  { icon: Receipt, label: "Relatório com resultado em dólar" },
+  { icon: Languages, label: "Atendimento 100% em português" },
+  { icon: ShieldCheck, label: "Leads exclusivos da sua empresa" },
+  { icon: Receipt, label: "Resultado medido em dólar" },
 ];
 
 const WORD_STAGGER = 0.05;
@@ -64,12 +58,12 @@ export default function Hero() {
       <div className="container-site relative grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-7">
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE }}>
-            <Tag align="left" className="!tracking-[0.2em] sm:!tracking-[0.28em]">
-              Para empresas de construção e reforma nos EUA
+            <Tag align="left" className="!tracking-[0.2em] lg:!tracking-[0.18em]">
+              Para donos de empresas de construção e reforma nos EUA
             </Tag>
           </motion.div>
 
-          <h1 className="font-display mt-6 text-balance text-[clamp(40px,8.4vw,72px)] font-extrabold leading-[1.02] tracking-[-0.035em] text-ink">
+          <h1 className="font-display mt-6 text-balance text-[clamp(34px,7.4vw,62px)] font-extrabold leading-[1.04] tracking-[-0.035em] text-ink">
             {title.map(({ w, gold }, i) => (
               <Fragment key={i}>
               <motion.span
@@ -82,6 +76,7 @@ export default function Hero() {
                 {i === title.length - 1 ? "." : null}
               </motion.span>
               {i < title.length - 1 ? " " : null}
+              {w.endsWith(".") && i < title.length - 1 ? <br className="hidden sm:block" /> : null}
               </Fragment>
             ))}
           </h1>
@@ -92,8 +87,9 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: afterTitle, ease: EASE }}
           >
-            Sem depender de indicação ou de contractor. A BuildScale monta o sistema completo de captação da sua empresa:{" "}
-            <span className="text-ink">Google Meu Negócio, anúncios no Meta e roteiros de vídeo</span>, com atendimento em português.
+            A BuildScale cuida de tudo o que traz cliente para sua empresa:{" "}
+            <span className="text-ink">anúncios, Google, Instagram, vídeos e atendimento dos leads</span>. Você foca na obra. A gente faz o
+            telefone tocar.
           </motion.p>
 
           <motion.div

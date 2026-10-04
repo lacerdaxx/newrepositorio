@@ -50,7 +50,7 @@ export default function OgImage() {
           </div>
         )}
         <div style={{ marginTop: 36, fontSize: 54, fontWeight: 800, lineHeight: 1.1, maxWidth: 820, letterSpacing: -1.5 }}>
-          Agenda cheia de orçamentos direto com o dono da casa.
+          Pare de depender de indicação. Agenda cheia direto com o dono da casa.
         </div>
         <div style={{ marginTop: 28, fontSize: 22, letterSpacing: 6, color: "#F7B52C", textTransform: "uppercase" }}>{siteConfig.slogan}</div>
       </div>

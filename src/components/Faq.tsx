@@ -11,23 +11,31 @@ import { EASE } from "@/lib/motion";
 const faqs = [
   {
     q: "Vocês atendem em português?",
-    a: "Sim. Atendimento, reuniões e relatórios em português. Os anúncios são em inglês, porque falam com o dono da casa americano.",
+    a: "Sim. Atendimento, reuniões e relatórios em português. Anúncios, Google e Instagram são em inglês, porque falam com o dono da casa americano.",
+  },
+  {
+    q: "Já paguei por lead e não deu certo. Por que agora seria diferente?",
+    a: "Porque o lead é só seu, não é vendido para outras empresas. O formulário filtra curioso, o cliente recebe resposta em segundos e o sistema faz o follow-up. O foco não é lead, é obra fechada.",
   },
   {
     q: "Quanto preciso investir em anúncios?",
-    a: "Recomendamos a partir de US$ 1.500/mês, pagos direto ao Facebook no seu cartão. Esse valor não passa por nós.",
+    a: "Recomendamos a partir de US$ 2.000/mês, pagos direto ao Facebook no seu cartão. Esse valor não passa pela BuildScale.",
   },
   {
     q: "Em quanto tempo vejo resultado?",
     a: "Os primeiros pedidos de orçamento costumam chegar nas primeiras semanas após o lançamento. Resultado consistente em 60 a 90 dias.",
   },
   {
-    q: "Tem fidelidade?",
-    a: "Contrato mínimo de 3 meses, que é o tempo para otimizar. Depois, cancelamento com 30 dias de aviso.",
+    q: "Eu não tenho tempo para gravar vídeo.",
+    a: "São 2 vídeos curtos por semana, gravados no celular durante a obra, com roteiro pronto. Leva menos de 10 minutos. O resto é com a gente.",
   },
   {
     q: "Preciso falar inglês?",
-    a: "Não para trabalhar com a gente. Para atender os leads, ajuda; passamos scripts prontos.",
+    a: "Não para trabalhar com a gente. Para atender os clientes, ajuda, e te entregamos scripts prontos em inglês.",
+  },
+  {
+    q: "Tem fidelidade?",
+    a: "Contrato mínimo de 3 meses, que é o tempo para otimizar. Depois, você cancela com 30 dias de aviso.",
   },
 ];
 

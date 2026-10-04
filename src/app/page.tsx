@@ -2,7 +2,9 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import Pain from "@/components/Pain";
+import Turn from "@/components/Turn";
 import HowItWorks from "@/components/HowItWorks";
+import PreSales from "@/components/PreSales";
 import Included from "@/components/Included";
 import TheMath from "@/components/TheMath";
 import Testimonials from "@/components/Testimonials";
@@ -25,8 +27,10 @@ export default function Home() {
         <Hero />
         <Marquee />
         <Pain />
+        <Turn />
         <BarsDivider />
         <HowItWorks />
+        <PreSales />
         <Included />
         <BarsDivider />
         <TheMath />

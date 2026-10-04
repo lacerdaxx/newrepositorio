@@ -2,48 +2,138 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, CheckCircle2, Lock, MessageCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, CheckCircle2, Lock, MessageCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useForm, type FieldPath, type UseFormRegisterReturn } from "react-hook-form";
 import { z } from "zod";
 import SectionHeading from "./ui/SectionHeading";
 import Button from "./ui/Button";
 import { Reveal } from "./ui/Reveal";
-import { whatsappLink } from "@/config/site";
+import { siteConfig, whatsappLink } from "@/config/site";
+import {
+  CAPACIDADES,
+  EQUIPES,
+  ESTADOS,
+  FATURAMENTOS,
+  GOOGLE,
+  INSTAGRAM_STATUS,
+  MOMENTOS,
+  ORIGENS,
+  PROBLEMAS,
+  SERVICOS,
+  TEMPOS,
+  TICKETS,
+  VERBAS,
+  classificarLead,
+} from "@/config/form";
 import { trackLead } from "@/lib/pixel";
 import { cn } from "@/lib/cn";
 import { EASE } from "@/lib/motion";
 
-const SERVICOS = ["Pintura", "Piso", "Reforma geral", "Cozinha/Banheiro", "Siding/Telhado", "Outro"] as const;
-const ESTADOS = ["MA", "FL", "NJ", "CT", "GA", "NY", "Outro"] as const;
-const FATURAMENTOS = ["Até US$ 20 mil", "US$ 20–50 mil", "US$ 50–100 mil", "Mais de US$ 100 mil"] as const;
-const ORIGENS = ["Indicação", "Sub", "Anúncio", "Misto"] as const;
-const DDIS = { "+1": { label: "🇺🇸 +1", digits: [10], placeholder: "(555) 123-4567" }, "+55": { label: "🇧🇷 +55", digits: [10, 11], placeholder: "(11) 91234-5678" } } as const;
+const DDIS = {
+  "+1": { label: "🇺🇸 +1", digits: [10], placeholder: "(555) 123-4567" },
+  "+55": { label: "🇧🇷 +55", digits: [10, 11], placeholder: "(11) 91234-5678" },
+} as const;
+
+const pick = (msg: string) => ({ error: msg });
 
 const schema = z
   .object({
-    servico: z.enum(SERVICOS, { error: "Escolha o principal serviço." }),
-    estado: z.enum(ESTADOS, { error: "Escolha o estado." }),
-    faturamento: z.enum(FATURAMENTOS, { error: "Escolha a faixa de faturamento." }),
-    origem: z.enum(ORIGENS, { error: "Escolha de onde vêm seus clientes." }),
-    nome: z.string().trim().min(2, "Digite seu nome."),
+    servicos: z.array(z.enum(SERVICOS)).min(1, "Escolha pelo menos um serviço."),
+    estado: z.enum(ESTADOS, pick("Escolha o estado.")),
+    cidade: z.string().trim().min(2, "Digite a cidade principal."),
+    tempo: z.enum(TEMPOS, pick("Escolha há quanto tempo a empresa existe.")),
+    equipe: z.enum(EQUIPES, pick("Escolha o tamanho da equipe.")),
+    faturamento: z.enum(FATURAMENTOS, pick("Escolha a faixa de faturamento.")),
+    ticket: z.enum(TICKETS, pick("Escolha o valor médio de uma obra.")),
+    origem: z.enum(ORIGENS, pick("Escolha de onde vêm seus clientes.")),
+    google: z.enum(GOOGLE, pick("Escolha uma opção.")),
+    instagramStatus: z.enum(INSTAGRAM_STATUS, pick("Escolha uma opção.")),
+    problema: z.enum(PROBLEMAS, pick("Escolha o seu maior problema.")),
+    verba: z.enum(VERBAS, pick("Escolha quanto pode investir.")),
+    momento: z.enum(MOMENTOS, pick("Escolha quando quer começar.")),
+    capacidade: z.enum(CAPACIDADES, pick("Escolha uma opção.")),
+    nome: z.string().trim().min(3, "Digite seu nome completo."),
     empresa: z.string().trim().min(2, "Digite o nome da empresa."),
     ddi: z.enum(["+1", "+55"]),
     telefone: z.string(),
+    email: z.string().trim().email("Digite um e-mail válido."),
+    instagram: z.string().trim().optional(),
+    consentimento: z.boolean().refine((v) => v, "Marque para podermos te chamar no WhatsApp."),
   })
   .superRefine((v, ctx) => {
     const n = v.telefone.replace(/\D/g, "").length;
     if (!(DDIS[v.ddi].digits as readonly number[]).includes(n)) {
-      ctx.addIssue({ code: "custom", path: ["telefone"], message: "Digite um WhatsApp válido com DDD/área." });
+      ctx.addIssue({ code: "custom", path: ["telefone"], message: "Digite um WhatsApp válido com DDD/código de área." });
     }
   });
 
 type FormData = z.infer<typeof schema>;
 
-const STEPS: { title: string; fields: FieldPath<FormData>[] }[] = [
-  { title: "Sua empresa", fields: ["servico", "estado"] },
-  { title: "Seu momento", fields: ["faturamento", "origem"] },
-  { title: "Seus dados", fields: ["nome", "empresa", "ddi", "telefone"] },
+type Question = {
+  name: FieldPath<FormData>;
+  legend: string;
+  hint?: string;
+  options: readonly string[];
+  cols: string;
+  multi?: boolean;
+};
+
+const STEPS: { title: string; fields: FieldPath<FormData>[]; questions: Question[] }[] = [
+  {
+    title: "Sua empresa",
+    fields: ["servicos", "estado", "cidade"],
+    questions: [
+      { name: "servicos", legend: "Qual o principal serviço da sua empresa?", hint: "Pode marcar mais de um.", options: SERVICOS, cols: "grid-cols-2 sm:grid-cols-4", multi: true },
+      { name: "estado", legend: "Em qual estado você atua?", options: ESTADOS, cols: "grid-cols-2 sm:grid-cols-4" },
+    ],
+  },
+  {
+    title: "Estrutura",
+    fields: ["tempo", "equipe"],
+    questions: [
+      { name: "tempo", legend: "Há quanto tempo sua empresa existe?", options: TEMPOS, cols: "grid-cols-2" },
+      { name: "equipe", legend: "Quantas pessoas trabalham na sua equipe (incluindo você)?", options: EQUIPES, cols: "grid-cols-2 sm:grid-cols-4" },
+    ],
+  },
+  {
+    title: "Faturamento",
+    fields: ["faturamento", "ticket"],
+    questions: [
+      { name: "faturamento", legend: "Quanto sua empresa fatura por mês, em média?", options: FATURAMENTOS, cols: "grid-cols-1 sm:grid-cols-2" },
+      { name: "ticket", legend: "Qual o valor médio de uma obra sua?", options: TICKETS, cols: "grid-cols-2" },
+    ],
+  },
+  {
+    title: "Como você vende hoje",
+    fields: ["origem", "google", "instagramStatus", "problema"],
+    questions: [
+      { name: "origem", legend: "De onde vêm a maioria dos seus clientes hoje?", options: ORIGENS, cols: "grid-cols-1 sm:grid-cols-2" },
+      { name: "google", legend: "Sua empresa tem perfil no Google Meu Negócio?", options: GOOGLE, cols: "grid-cols-1 sm:grid-cols-3" },
+      { name: "instagramStatus", legend: "E o Instagram da empresa?", options: INSTAGRAM_STATUS, cols: "grid-cols-1 sm:grid-cols-3" },
+      { name: "problema", legend: "Qual o seu maior problema hoje?", options: PROBLEMAS, cols: "grid-cols-1" },
+    ],
+  },
+  {
+    title: "Investimento e momento",
+    fields: ["verba", "momento", "capacidade"],
+    questions: [
+      {
+        name: "verba",
+        legend: "Quanto você consegue investir por mês em anúncios?",
+        hint: "Pago direto ao Facebook, fora o serviço.",
+        options: VERBAS,
+        cols: "grid-cols-1 sm:grid-cols-2",
+      },
+      { name: "momento", legend: "Quando você quer começar?", options: MOMENTOS, cols: "grid-cols-1 sm:grid-cols-2" },
+      { name: "capacidade", legend: "Quantas obras a mais por mês sua equipe consegue atender?", options: CAPACIDADES, cols: "grid-cols-2 sm:grid-cols-4" },
+    ],
+  },
+  {
+    title: "Seus dados",
+    fields: ["nome", "empresa", "ddi", "telefone", "email", "instagram", "consentimento"],
+    questions: [],
+  },
 ];
 
 function maskPhone(raw: string, ddi: keyof typeof DDIS) {
@@ -62,19 +152,31 @@ function maskPhone(raw: string, ddi: keyof typeof DDIS) {
   return `(${x.slice(0, 2)}) ${local.slice(0, split)}-${local.slice(split)}`;
 }
 
-export function buildMessage(d: FormData) {
+export function buildMessage(d: FormData, ref: string) {
+  const ig = d.instagram?.trim() ? d.instagram.trim() : "—";
   return [
     "Olá, BuildScale! Quero meu diagnóstico gratuito.",
-    `Nome: ${d.nome.trim()} | Empresa: ${d.empresa.trim()}`,
-    `Serviço: ${d.servico} | Estado: ${d.estado}`,
-    `Faturamento: ${d.faturamento} | Clientes vêm de: ${d.origem}`,
+    `👤 ${d.nome.trim()} — ${d.empresa.trim()}`,
+    `📍 ${d.cidade.trim()}, ${d.estado}`,
+    `🔨 Serviços: ${d.servicos.join(", ")}`,
+    `👷 Equipe: ${d.equipe} · Empresa há: ${d.tempo}`,
+    `💰 Faturamento: ${d.faturamento} · Ticket médio: ${d.ticket}`,
+    `📣 Clientes vêm de: ${d.origem}`,
+    `⭐ Google: ${d.google} · Instagram: ${d.instagramStatus}`,
+    `🎯 Maior problema: ${d.problema}`,
+    `💵 Verba para anúncios: ${d.verba}`,
+    `⏱️ Começar: ${d.momento} · Capacidade: ${d.capacidade}`,
+    `📧 ${d.email.trim()} · IG: ${ig}`,
+    `Ref: ${ref}`,
   ].join("\n");
 }
+
+type Result = { url: string; classificacao: "A" | "B" | "C" };
 
 export default function DiagnosticForm() {
   const [step, setStep] = useState(0);
   const [dir, setDir] = useState(1);
-  const [waUrl, setWaUrl] = useState<string | null>(null);
+  const [result, setResult] = useState<Result | null>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const touched = useRef(false);
@@ -89,14 +191,17 @@ export default function DiagnosticForm() {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: "onTouched",
-    defaultValues: { ddi: "+1", telefone: "", nome: "", empresa: "" },
+    defaultValues: { servicos: [], ddi: "+1", telefone: "", nome: "", empresa: "", cidade: "", email: "", instagram: "", consentimento: false },
   });
 
   const ddi = watch("ddi");
+  const last = STEPS.length - 1;
 
   useEffect(() => {
     if (!touched.current) return;
     headingRef.current?.focus({ preventScroll: true });
+    const top = cardRef.current?.getBoundingClientRect().top ?? 0;
+    if (top < 80) window.scrollTo({ top: window.scrollY + top - 96, behavior: "smooth" });
   }, [step]);
 
   const go = (to: number) => {
@@ -111,18 +216,33 @@ export default function DiagnosticForm() {
   };
 
   const onValid = (data: FormData) => {
-    trackLead();
-    const url = whatsappLink(buildMessage(data));
-    setWaUrl(url);
+    const { pontuacao, classificacao } = classificarLead(data);
+    const ref = `BS-${classificacao}${pontuacao}`;
+    const url = whatsappLink(buildMessage(data, ref));
+    trackLead(classificacao, pontuacao);
+
+    if (siteConfig.leadWebhookUrl) {
+      fetch(siteConfig.leadWebhookUrl, {
+        method: "POST",
+        mode: "no-cors",
+        keepalive: true,
+        headers: { "Content-Type": "text/plain;charset=UTF-8" },
+        body: JSON.stringify({ ...data, classificacao, pontuacao, ref, enviadoEm: new Date().toISOString() }),
+      }).catch(() => {});
+    }
+
+    setResult({ url, classificacao });
     window.requestAnimationFrame(() => cardRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }));
-    window.setTimeout(() => {
-      window.location.href = url;
-    }, 1400);
+    if (classificacao !== "C") {
+      window.setTimeout(() => {
+        window.location.href = url;
+      }, 1400);
+    }
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (step < STEPS.length - 1) void next();
+    if (step < last) void next();
     else void handleSubmit(onValid)(e);
   };
 
@@ -134,25 +254,27 @@ export default function DiagnosticForm() {
           tag="Diagnóstico gratuito"
           title={
             <>
-              Agende seu <span className="text-gold">diagnóstico gratuito</span>
+              Descubra quantas obras sua empresa <span className="text-gold">pode fechar por mês</span>
             </>
           }
-          subtitle="Em 30 minutos mostramos quantos orçamentos sua empresa pode gerar por mês e quanto investir."
+          subtitle="Responda em menos de 2 minutos. Em 30 minutos de conversa, analisamos sua região, seus serviços e seu ticket, e mostramos quantos orçamentos você pode gerar e quanto precisa investir. Gratuito e sem compromisso."
         />
 
         <Reveal className="mx-auto mt-10 max-w-2xl md:mt-14">
-          <div ref={cardRef} className="glass relative overflow-hidden rounded-3xl border-white/10 bg-[#121212]/80 p-5 shadow-[0_40px_120px_-50px_rgba(247,181,44,0.35)] sm:p-8 md:p-10">
+          <div
+            ref={cardRef}
+            className="glass relative scroll-mt-28 overflow-hidden rounded-3xl border-white/10 bg-[#121212]/80 p-5 shadow-[0_40px_120px_-50px_rgba(247,181,44,0.35)] sm:p-8 md:p-10"
+          >
             <AnimatePresence mode="wait" initial={false}>
-              {waUrl ? (
-                <Success key="ok" url={waUrl} />
+              {result ? (
+                <Success key="ok" {...result} />
               ) : (
                 <motion.form key="form" onSubmit={onSubmit} noValidate exit={{ opacity: 0, scale: 0.98 }} transition={{ duration: 0.3 }}>
-                  {/* Progresso */}
-                  <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.18em]">
-                    <span className="text-gold">
+                  <div className="flex items-center justify-between gap-4 text-xs font-semibold uppercase tracking-[0.18em]">
+                    <span className="shrink-0 text-gold">
                       Etapa {step + 1} de {STEPS.length}
                     </span>
-                    <span className="text-muted">{STEPS[step].title}</span>
+                    <span className="truncate text-muted">{STEPS[step].title}</span>
                   </div>
                   <div
                     className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/[0.06]"
@@ -170,11 +292,10 @@ export default function DiagnosticForm() {
                     />
                   </div>
 
-                  <div className="relative mt-8 min-h-[380px] sm:min-h-[340px]">
+                  <div className="relative mt-8 md:min-h-[360px]">
                     <AnimatePresence mode="wait" custom={dir} initial={false}>
                       <motion.div
                         key={step}
-                        custom={dir}
                         initial={{ opacity: 0, x: dir * 40 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: dir * -40 }}
@@ -184,113 +305,97 @@ export default function DiagnosticForm() {
                           Etapa {step + 1}: {STEPS[step].title}
                         </h3>
 
-                        {step === 0 && (
-                          <div className="space-y-8">
+                        <div className="space-y-8">
+                          {STEPS[step].questions.map((q) => (
                             <OptionGroup
-                              legend="Qual o principal serviço da sua empresa?"
-                              options={SERVICOS}
-                              error={errors.servico?.message}
-                              registration={register("servico")}
-                              selected={watch("servico")}
-                              cols="grid-cols-2 sm:grid-cols-3"
+                              key={q.name}
+                              {...q}
+                              error={(errors[q.name as keyof FormData] as { message?: string } | undefined)?.message}
+                              registration={register(q.name)}
+                              selected={watch(q.name) as string | string[] | undefined}
                             />
-                            <OptionGroup
-                              legend="Em qual estado você atende?"
-                              options={ESTADOS}
-                              error={errors.estado?.message}
-                              registration={register("estado")}
-                              selected={watch("estado")}
-                              cols="grid-cols-4 sm:grid-cols-7"
-                              compact
-                            />
-                          </div>
-                        )}
+                          ))}
 
-                        {step === 1 && (
-                          <div className="space-y-8">
-                            <OptionGroup
-                              legend="Qual o faturamento mensal da empresa?"
-                              options={FATURAMENTOS}
-                              error={errors.faturamento?.message}
-                              registration={register("faturamento")}
-                              selected={watch("faturamento")}
-                              cols="grid-cols-1 sm:grid-cols-2"
-                            />
-                            <OptionGroup
-                              legend="Hoje, de onde vêm seus clientes?"
-                              options={ORIGENS}
-                              error={errors.origem?.message}
-                              registration={register("origem")}
-                              selected={watch("origem")}
-                              cols="grid-cols-2 sm:grid-cols-4"
-                            />
-                          </div>
-                        )}
-
-                        {step === 2 && (
-                          <div className="space-y-5">
-                            <Field label="Seu nome" id="nome" error={errors.nome?.message}>
+                          {step === 0 && (
+                            <Field label="Cidade principal" id="cidade" error={errors.cidade?.message}>
                               <input
-                                id="nome"
-                                autoComplete="name"
-                                placeholder="Como podemos te chamar?"
-                                className={inputCls(!!errors.nome)}
-                                aria-invalid={!!errors.nome}
-                                aria-describedby={errors.nome ? "nome-erro" : undefined}
-                                {...register("nome")}
+                                id="cidade"
+                                autoComplete="address-level2"
+                                placeholder="Ex.: Boston"
+                                className={inputCls(!!errors.cidade)}
+                                aria-invalid={!!errors.cidade}
+                                aria-describedby={errors.cidade ? "cidade-erro" : undefined}
+                                {...register("cidade")}
                               />
                             </Field>
-                            <Field label="Nome da empresa" id="empresa" error={errors.empresa?.message}>
-                              <input
-                                id="empresa"
-                                autoComplete="organization"
-                                placeholder="Ex.: Silva Painting LLC"
-                                className={inputCls(!!errors.empresa)}
-                                aria-invalid={!!errors.empresa}
-                                aria-describedby={errors.empresa ? "empresa-erro" : undefined}
-                                {...register("empresa")}
-                              />
-                            </Field>
-                            <Field label="WhatsApp" id="telefone" error={errors.telefone?.message}>
-                              <div className="flex gap-2">
-                                <label htmlFor="ddi" className="sr-only">
-                                  País
+                          )}
+
+                          {step === last && (
+                            <div className="space-y-5">
+                              <Field label="Nome completo" id="nome" error={errors.nome?.message}>
+                                <input id="nome" autoComplete="name" placeholder="Seu nome e sobrenome" className={inputCls(!!errors.nome)} aria-invalid={!!errors.nome} aria-describedby={errors.nome ? "nome-erro" : undefined} {...register("nome")} />
+                              </Field>
+                              <Field label="Nome da empresa" id="empresa" error={errors.empresa?.message}>
+                                <input id="empresa" autoComplete="organization" placeholder="Ex.: Silva Painting LLC" className={inputCls(!!errors.empresa)} aria-invalid={!!errors.empresa} aria-describedby={errors.empresa ? "empresa-erro" : undefined} {...register("empresa")} />
+                              </Field>
+                              <Field label="WhatsApp" id="telefone" error={errors.telefone?.message}>
+                                <div className="flex gap-2">
+                                  <label htmlFor="ddi" className="sr-only">
+                                    País
+                                  </label>
+                                  <select
+                                    id="ddi"
+                                    className={cn(inputCls(false), "!w-[108px] shrink-0 cursor-pointer !px-3")}
+                                    {...register("ddi", {
+                                      onChange: (e: React.ChangeEvent<HTMLSelectElement>) =>
+                                        setValue("telefone", maskPhone(watch("telefone"), e.target.value as keyof typeof DDIS)),
+                                    })}
+                                  >
+                                    {Object.entries(DDIS).map(([k, v]) => (
+                                      <option key={k} value={k}>
+                                        {v.label}
+                                      </option>
+                                    ))}
+                                  </select>
+                                  <input
+                                    id="telefone"
+                                    type="tel"
+                                    inputMode="tel"
+                                    autoComplete="tel-national"
+                                    placeholder={DDIS[ddi].placeholder}
+                                    className={cn(inputCls(!!errors.telefone), "min-w-0 flex-1")}
+                                    aria-invalid={!!errors.telefone}
+                                    aria-describedby={errors.telefone ? "telefone-erro" : undefined}
+                                    {...register("telefone", {
+                                      onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                                        setValue("telefone", maskPhone(e.target.value, ddi), { shouldValidate: !!errors.telefone }),
+                                    })}
+                                  />
+                                </div>
+                              </Field>
+                              <Field label="E-mail" id="email" error={errors.email?.message}>
+                                <input id="email" type="email" inputMode="email" autoComplete="email" placeholder="voce@suaempresa.com" className={inputCls(!!errors.email)} aria-invalid={!!errors.email} aria-describedby={errors.email ? "email-erro" : undefined} {...register("email")} />
+                              </Field>
+                              <Field label="Instagram da empresa (opcional)" id="instagram">
+                                <input id="instagram" autoComplete="off" placeholder="@suaempresa" className={inputCls(false)} {...register("instagram")} />
+                              </Field>
+                              <div>
+                                <label htmlFor="consentimento" className="flex cursor-pointer items-start gap-3 text-sm leading-relaxed text-[#D4D4D8]">
+                                  <input
+                                    id="consentimento"
+                                    type="checkbox"
+                                    className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded accent-[#F7B52C]"
+                                    aria-invalid={!!errors.consentimento}
+                                    aria-describedby={errors.consentimento ? "consentimento-erro" : undefined}
+                                    {...register("consentimento")}
+                                  />
+                                  Concordo em receber contato da BuildScale pelo WhatsApp.
                                 </label>
-                                <select
-                                  id="ddi"
-                                  className={cn(inputCls(false), "!w-[108px] shrink-0 cursor-pointer !px-3")}
-                                  {...register("ddi", {
-                                    onChange: (e: React.ChangeEvent<HTMLSelectElement>) =>
-                                      setValue("telefone", maskPhone(watch("telefone"), e.target.value as keyof typeof DDIS)),
-                                  })}
-                                >
-                                  {Object.entries(DDIS).map(([k, v]) => (
-                                    <option key={k} value={k}>
-                                      {v.label}
-                                    </option>
-                                  ))}
-                                </select>
-                                <input
-                                  id="telefone"
-                                  type="tel"
-                                  inputMode="tel"
-                                  autoComplete="tel-national"
-                                  placeholder={DDIS[ddi].placeholder}
-                                  className={cn(inputCls(!!errors.telefone), "min-w-0 flex-1")}
-                                  aria-invalid={!!errors.telefone}
-                                  aria-describedby={errors.telefone ? "telefone-erro" : undefined}
-                                  {...register("telefone", {
-                                    onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                                      setValue("telefone", maskPhone(e.target.value, ddi), { shouldValidate: !!errors.telefone }),
-                                  })}
-                                />
+                                <ErrorText id="consentimento-erro" message={errors.consentimento?.message} />
                               </div>
-                            </Field>
-                            <p className="flex items-center gap-2 pt-1 text-xs text-muted">
-                              <Lock aria-hidden className="h-3.5 w-3.5" /> Seus dados ficam só com a BuildScale. Sem spam.
-                            </p>
-                          </div>
-                        )}
+                            </div>
+                          )}
+                        </div>
                       </motion.div>
                     </AnimatePresence>
                   </div>
@@ -307,7 +412,7 @@ export default function DiagnosticForm() {
                     ) : (
                       <span className="hidden sm:block" />
                     )}
-                    {step < STEPS.length - 1 ? (
+                    {step < last ? (
                       <Button type="submit" className="w-full sm:w-auto">
                         Continuar <ArrowRight aria-hidden className="ml-1 inline h-[18px] w-[18px]" />
                       </Button>
@@ -317,6 +422,11 @@ export default function DiagnosticForm() {
                       </Button>
                     )}
                   </div>
+                  {step === last && (
+                    <p className="mt-4 flex items-center justify-center gap-2 text-center text-xs text-muted sm:justify-end">
+                      <Lock aria-hidden className="h-3.5 w-3.5 shrink-0" /> Você será direcionado para o nosso WhatsApp. Atendimento em português.
+                    </p>
+                  )}
                 </motion.form>
               )}
             </AnimatePresence>
@@ -349,14 +459,7 @@ function ErrorText({ id, message }: { id: string; message?: string }) {
   return (
     <AnimatePresence>
       {message && (
-        <motion.p
-          id={id}
-          role="alert"
-          initial={{ opacity: 0, y: -4 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
-          className="mt-2 text-sm font-medium text-red-400"
-        >
+        <motion.p id={id} role="alert" initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="mt-2 text-sm font-medium text-red-400">
           {message}
         </motion.p>
       )}
@@ -366,52 +469,50 @@ function ErrorText({ id, message }: { id: string; message?: string }) {
 
 function OptionGroup({
   legend,
+  hint,
   options,
   error,
   registration,
   selected,
   cols,
-  compact,
-}: {
-  legend: string;
-  options: readonly string[];
-  error?: string;
-  registration: UseFormRegisterReturn;
-  selected?: string;
-  cols: string;
-  compact?: boolean;
-}) {
+  multi,
+}: Question & { error?: string; registration: UseFormRegisterReturn; selected?: string | string[] }) {
   const errId = `${registration.name}-erro`;
+  const isOn = (opt: string) => (Array.isArray(selected) ? selected.includes(opt) : selected === opt);
   return (
     <fieldset aria-describedby={error ? errId : undefined}>
-      <legend className="mb-3 text-base font-semibold text-ink">{legend}</legend>
-      <div className={cn("grid gap-2.5", cols)}>
+      <legend className="text-base font-semibold text-ink">{legend}</legend>
+      {hint && <p className="mt-1 text-sm text-muted">{hint}</p>}
+      <div className={cn("mt-3 grid gap-2.5", cols)}>
         {options.map((opt) => {
-          const on = selected === opt;
+          const on = isOn(opt);
           return (
             <label
               key={opt}
               className={cn(
-                "relative flex min-h-[52px] cursor-pointer select-none items-center rounded-xl border text-sm font-medium transition-all has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-gold/70 sm:text-[15px]",
-                compact ? "justify-center px-2 text-center" : "justify-between gap-2 px-3 sm:px-4",
+                "relative flex min-h-[52px] cursor-pointer select-none items-center justify-between gap-2 rounded-xl border px-3 py-2.5 text-sm font-medium leading-snug transition-all has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-gold/70 sm:px-4 sm:text-[15px]",
                 on
                   ? "border-gold/70 bg-gold/[0.09] text-ink shadow-[0_0_0_1px_rgba(247,181,44,0.25),0_10px_30px_-12px_rgba(247,181,44,0.4)]"
                   : "border-white/10 bg-white/[0.02] text-[#D4D4D8] hover:border-white/25 hover:bg-white/[0.04]",
               )}
             >
-              <input type="radio" value={opt} className="sr-only" {...registration} />
+              <input type={multi ? "checkbox" : "radio"} value={opt} className="sr-only" {...registration} />
               <span>{opt}</span>
-              {!compact && (
-                <span
-                  aria-hidden
-                  className={cn(
-                    "hidden h-5 w-5 shrink-0 place-items-center rounded-full border transition-colors sm:grid",
-                    on ? "border-gold bg-gold" : "border-white/20",
-                  )}
-                >
-                  {on && <span className="h-1.5 w-1.5 rounded-full bg-[#140d00]" />}
-                </span>
-              )}
+              <span
+                aria-hidden
+                className={cn(
+                  "grid h-5 w-5 shrink-0 place-items-center border transition-colors",
+                  multi ? "rounded-md" : "rounded-full",
+                  on ? "border-gold bg-gold" : "border-white/20",
+                )}
+              >
+                {on &&
+                  (multi ? (
+                    <Check strokeWidth={3.5} className="h-3 w-3 text-[#140d00]" />
+                  ) : (
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#140d00]" />
+                  ))}
+              </span>
             </label>
           );
         })}
@@ -421,7 +522,9 @@ function OptionGroup({
   );
 }
 
-function Success({ url }: { url: string }) {
+function Success({ url, classificacao }: Result) {
+  const isC = classificacao === "C";
+  const needsButton = !isC || !siteConfig.leadWebhookUrl;
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.96 }}
@@ -439,23 +542,34 @@ function Success({ url }: { url: string }) {
       >
         <CheckCircle2 aria-hidden className="h-10 w-10 text-[#140d00]" />
       </motion.span>
-      <h3 className="font-display mt-7 text-3xl font-extrabold tracking-[-0.02em] text-ink">Pronto! Abrindo o WhatsApp…</h3>
-      <p className="mt-3 max-w-sm text-muted">Sua mensagem já vai preenchida. É só tocar em enviar e a gente responde rapidinho.</p>
-      <div className="mt-6 flex items-center gap-1.5" aria-hidden>
-        {[0, 1, 2].map((i) => (
-          <motion.span
-            key={i}
-            className="h-2 w-2 rounded-full bg-gold"
-            animate={{ opacity: [0.3, 1, 0.3] }}
-            transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.2 }}
-          />
-        ))}
-      </div>
-      <Button href={url} className="mt-8 w-full sm:w-auto">
-        <span className="inline-flex items-center gap-2">
-          <MessageCircle aria-hidden className="h-5 w-5" /> Abrir WhatsApp
-        </span>
-      </Button>
+      {isC ? (
+        <>
+          <h3 className="font-display mt-7 text-3xl font-extrabold tracking-[-0.02em] text-ink">Recebemos suas respostas!</h3>
+          <p className="mt-3 max-w-sm text-muted">Vamos analisar o melhor momento para sua empresa e te chamar no WhatsApp.</p>
+        </>
+      ) : (
+        <>
+          <h3 className="font-display mt-7 text-3xl font-extrabold tracking-[-0.02em] text-ink">Pronto! Abrindo o WhatsApp…</h3>
+          <p className="mt-3 max-w-sm text-muted">Já estamos te esperando do outro lado.</p>
+          <div className="mt-6 flex items-center gap-1.5" aria-hidden>
+            {[0, 1, 2].map((i) => (
+              <motion.span
+                key={i}
+                className="h-2 w-2 rounded-full bg-gold"
+                animate={{ opacity: [0.3, 1, 0.3] }}
+                transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.2 }}
+              />
+            ))}
+          </div>
+        </>
+      )}
+      {needsButton && (
+        <Button href={url} className="mt-8 w-full sm:w-auto">
+          <span className="inline-flex items-center gap-2">
+            <MessageCircle aria-hidden className="h-5 w-5" /> Abrir WhatsApp
+          </span>
+        </Button>
+      )}
     </motion.div>
   );
 }

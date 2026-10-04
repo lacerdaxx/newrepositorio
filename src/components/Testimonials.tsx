@@ -35,7 +35,7 @@ export default function Testimonials() {
           tag="Depoimentos"
           title={
             <>
-              Quem já vende <span className="text-gold">direto ao dono da casa</span>
+              Quem já saiu da <span className="text-gold">dependência de indicação</span>
             </>
           }
         />

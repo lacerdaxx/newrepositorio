@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const sections = [
   {
     h: "Quais dados coletamos",
-    p: "Quando você preenche o formulário de diagnóstico, coletamos nome, nome da empresa, número de WhatsApp, principal serviço, estado de atuação, faixa de faturamento e origem dos clientes. Esses dados são enviados por você mesmo, por meio de uma mensagem no WhatsApp.",
+    p: "Quando você preenche o formulário de diagnóstico, coletamos nome, nome da empresa, WhatsApp, e-mail, Instagram (opcional), cidade e estado de atuação, além das suas respostas sobre serviços, equipe, faturamento, ticket médio, origem dos clientes, presença no Google e no Instagram, verba e momento. Esses dados são enviados por você por meio de uma mensagem no WhatsApp e podem ser registrados em nossa ferramenta de atendimento.",
   },
   {
     h: "Como usamos os dados",

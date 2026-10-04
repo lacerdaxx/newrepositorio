@@ -12,7 +12,7 @@ export default function Tag({ children, className, align = "center" }: { childre
     >
       <span aria-hidden className="h-px w-6 shrink-0 bg-gradient-to-r from-transparent to-gold sm:w-10" />
       <span>{children}</span>
-      <span aria-hidden className={cn("h-px w-6 shrink-0 bg-gradient-to-l from-transparent to-gold sm:w-10", align === "left" && "hidden sm:block")} />
+      <span aria-hidden className={cn("h-px w-6 shrink-0 bg-gradient-to-l from-transparent to-gold sm:w-10", align === "left" && "hidden")} />
     </p>
   );
 }

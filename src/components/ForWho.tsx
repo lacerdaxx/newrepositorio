@@ -4,15 +4,15 @@ import SpotlightCard from "./ui/SpotlightCard";
 import { RevealGroup } from "./ui/Reveal";
 
 const yes = [
-  "Tem empresa de reforma ou construção nos EUA",
-  "Quer vender direto ao dono da casa",
-  "Tem equipe para mais obras",
-  "Responde leads rápido",
+  "Tem empresa de construção ou reforma rodando nos EUA",
+  "Quer vender direto ao dono da casa e parar de depender de contractor",
+  "Tem equipe (ou quer montar) para atender mais obras",
+  "Está disposto a gravar 2 vídeos curtos por semana na obra",
 ];
 const no = [
-  "Está começando sem equipe",
-  "Não tem verba para anunciar (mínimo recomendado de US$ 1.500/mês)",
-  "Não atende o telefone",
+  "Está começando agora, sem equipe e sem obras feitas",
+  "Não tem verba para anunciar (mínimo recomendado de US$ 2.000/mês)",
+  "Deixa o cliente esperando e não retorna",
 ];
 
 export default function ForWho() {
@@ -23,7 +23,7 @@ export default function ForWho() {
           tag="Para quem é"
           title={
             <>
-              Feito para quem quer <span className="text-gold">crescer de verdade</span>
+              A BuildScale <span className="text-gold">não é para todo mundo</span>
             </>
           }
         />

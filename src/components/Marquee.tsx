@@ -1,4 +1,4 @@
-const services = ["Pintura", "Piso", "Siding", "Telhado", "Cozinha", "Banheiro", "Deck", "Basement"];
+const services = ["Painting", "Flooring", "Siding", "Roofing", "Kitchens", "Bathrooms", "Decks", "Basements", "Remodeling"];
 
 export default function Marquee() {
   return (

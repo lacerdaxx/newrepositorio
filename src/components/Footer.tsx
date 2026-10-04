@@ -13,6 +13,9 @@ export default function Footer({ logoSrc }: { logoSrc: string }) {
           {logoSrc.endsWith(".svg") && (
             <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.26em] text-muted">{siteConfig.slogan}</p>
           )}
+          <p className="mt-5 max-w-sm text-pretty text-sm leading-relaxed text-muted">
+            Não entregamos apenas leads. Estruturamos o caminho entre o anúncio e a obra fechada.
+          </p>
         </div>
         <a
           href={whatsappLink()}
@@ -26,7 +29,7 @@ export default function Footer({ logoSrc }: { logoSrc: string }) {
       <div className="border-t border-white/[0.06]">
         <div className="container-site flex flex-col gap-3 py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {year} {siteConfig.nome}. Todos os direitos reservados.
+            © {year} {siteConfig.nome}
           </p>
           <a href="/privacidade" className="underline-offset-4 hover:text-ink hover:underline">
             Política de Privacidade

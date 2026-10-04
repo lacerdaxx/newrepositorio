@@ -34,7 +34,7 @@ export const siteConfig = {
   seo: {
     title: "BuildScale Company | Marketing para construtoras brasileiras nos EUA",
     description:
-      "Agenda cheia de orçamentos direto com o dono da casa. Google Meu Negócio, anúncios no Meta e roteiros de vídeo para empresas brasileiras de construção e reforma nos EUA, com atendimento em português.",
+      "Pare de depender de indicação. Anúncios, Google, Instagram, vídeos e atendimento dos leads para empresas brasileiras de construção e reforma nos EUA, com atendimento em português.",
   },
 
   /** Depoimentos — substitua os placeholders pelos reais (não invente). */
@@ -61,6 +61,12 @@ export const siteConfig = {
       result: "[Resultado]",
     },
   ] as Testimonial[],
+
+  /**
+   * Opcional: URL que recebe cada lead em JSON (Zapier, Make, Google Apps Script, CRM).
+   * Com ela preenchida, leads "C" não precisam abrir o WhatsApp para não se perderem.
+   */
+  leadWebhookUrl: "",
 
   /** URL do vídeo vertical do hero (mp4). Vazio = mostra placeholder com play. */
   heroVideoUrl: "",

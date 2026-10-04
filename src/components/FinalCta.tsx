@@ -23,11 +23,11 @@ export default function FinalCta() {
           </div>
           <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-[#111] to-transparent" />
           <Reveal>
-            <h2 className="font-display mx-auto max-w-3xl text-balance text-[34px] font-extrabold leading-[1.04] tracking-[-0.03em] text-ink sm:text-5xl md:text-6xl">
-              Pronto para parar de <span className="text-gold">depender de indicação?</span>
+            <h2 className="font-display mx-auto max-w-3xl text-balance text-[30px] font-extrabold leading-[1.08] tracking-[-0.03em] text-ink sm:text-4xl md:text-5xl">
+              Enquanto você lê isso, alguém na sua região está pedindo orçamento <span className="text-gold">para outra empresa.</span>
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-base text-muted md:text-lg">
-              Faça o diagnóstico gratuito e veja quantos orçamentos sua empresa pode gerar por mês.
+              Agende seu diagnóstico gratuito e descubra quantos clientes estão esperando por você.
             </p>
             <div className="mt-9 flex justify-center">
               <Button href="#diagnostico" arrow className="w-full sm:w-auto">

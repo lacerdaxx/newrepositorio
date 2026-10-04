@@ -8,11 +8,11 @@ import { Reveal } from "./ui/Reveal";
 import { EASE } from "@/lib/motion";
 
 const flow = [
-  { value: 3000, prefix: "US$ ", label: "em anúncios" },
-  { value: 50, label: "orçamentos" },
-  { value: 20, label: "visitas" },
-  { value: 5, label: "obras fechadas" },
-  { value: 40000, prefix: "US$ ", label: "em vendas", highlight: true },
+  { value: 2000, prefix: "US$ ", label: "em anúncios" },
+  { value: 33, label: "pedidos de orçamento" },
+  { value: 13, label: "visitas" },
+  { value: 3, label: "obras fechadas" },
+  { value: 24000, prefix: "US$ ", label: "em vendas", highlight: true },
 ];
 
 const fmt = (n: number) => Math.round(n).toLocaleString("pt-BR");
@@ -50,7 +50,7 @@ export default function TheMath() {
           tag="Faça a conta"
           title={
             <>
-              Quanto uma campanha bem feita pode <span className="text-gold">colocar no seu caixa</span>
+              Quanto vale <span className="text-gold">uma obra a mais por semana?</span>
             </>
           }
         />
@@ -77,7 +77,7 @@ export default function TheMath() {
                     >
                       <Counter to={s.value} prefix={s.prefix} start={isIn} />
                     </p>
-                    <p className="mt-2 whitespace-nowrap text-sm font-medium uppercase tracking-[0.14em] text-muted lg:text-xs">{s.label}</p>
+                    <p className="mx-auto mt-2 max-w-[11rem] text-balance text-sm font-medium uppercase tracking-[0.14em] text-muted lg:text-xs">{s.label}</p>
                   </motion.li>
                   {i < flow.length - 1 && (
                     <motion.li
@@ -93,9 +93,15 @@ export default function TheMath() {
                 </Fragment>
               ))}
             </ol>
-            <p className="relative mt-8 border-t border-white/[0.08] pt-6 text-center text-sm leading-relaxed text-muted">
-              Exemplo ilustrativo com ticket médio de US$ 8 mil. Os números variam por serviço, região e velocidade de atendimento.
-            </p>
+            <div className="relative mt-8 border-t border-white/[0.08] pt-6 text-center">
+              <p className="mx-auto max-w-2xl text-pretty text-base leading-relaxed text-ink md:text-lg">
+                Com um ticket médio de US$ 8 mil, <span className="text-gold">uma única obra já paga o investimento do mês.</span> O resto é
+                lucro e agenda cheia.
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-muted">
+                Exemplo ilustrativo. Os números variam conforme serviço, região e velocidade de atendimento.
+              </p>
+            </div>
           </div>
         </Reveal>
       </div>
