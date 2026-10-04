@@ -35,13 +35,14 @@ const sections = [
 ];
 
 export default function Privacidade() {
-  const logoSrc = getLogoSrc();
+  const logoSrc = getLogoSrc("header");
+  const footerLogoSrc = getLogoSrc("footer");
   return (
     <>
       <header className="border-b border-white/[0.08]">
-        <div className="container-site flex h-16 items-center justify-between md:h-20">
+        <div className="container-site flex h-[72px] items-center justify-between md:h-24">
           <Link href="/" aria-label="Voltar para o início">
-            <Logo src={logoSrc} className="h-8 md:h-9" />
+            <Logo src={logoSrc} className="h-12 md:h-14" />
           </Link>
           <Link href="/" className="inline-flex min-h-[48px] items-center gap-2 text-sm font-semibold text-muted hover:text-ink">
             <ArrowLeft aria-hidden className="h-4 w-4" /> Voltar
@@ -63,7 +64,7 @@ export default function Privacidade() {
           ))}
         </div>
       </main>
-      <Footer logoSrc={logoSrc} />
+      <Footer logoSrc={footerLogoSrc} />
     </>
   );
 }

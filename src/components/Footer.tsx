@@ -8,8 +8,11 @@ export default function Footer({ logoSrc }: { logoSrc: string }) {
     <footer className="border-t border-white/[0.08] bg-[#070707]">
       <div className="container-site flex flex-col gap-10 py-12 md:flex-row md:items-center md:justify-between md:py-14">
         <div>
-          <Logo src={logoSrc} />
-          <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.26em] text-muted">{siteConfig.slogan}</p>
+          <Logo src={logoSrc} className="h-28 md:h-32" />
+          {/* O logo completo já traz o slogan; o placeholder não */}
+          {logoSrc.endsWith(".svg") && (
+            <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.26em] text-muted">{siteConfig.slogan}</p>
+          )}
         </div>
         <a
           href={whatsappLink()}

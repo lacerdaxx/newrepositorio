@@ -16,7 +16,8 @@ import { BarsDivider } from "@/components/ui/GrowthBars";
 import { getLogoSrc } from "@/lib/logo";
 
 export default function Home() {
-  const logoSrc = getLogoSrc();
+  const logoSrc = getLogoSrc("header");
+  const footerLogoSrc = getLogoSrc("footer");
   return (
     <>
       <Header logoSrc={logoSrc} />
@@ -36,7 +37,7 @@ export default function Home() {
         <Faq />
         <FinalCta />
       </main>
-      <Footer logoSrc={logoSrc} />
+      <Footer logoSrc={footerLogoSrc} />
       <WhatsAppFloat />
     </>
   );

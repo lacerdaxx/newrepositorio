@@ -17,9 +17,9 @@ export default function Header({ logoSrc }: { logoSrc: string }) {
         scrolled ? "border-white/[0.08] bg-[#0A0A0A]/75 backdrop-blur-xl" : "border-transparent bg-transparent",
       )}
     >
-      <div className="container-site flex h-16 items-center justify-between md:h-20">
+      <div className="container-site flex h-[72px] items-center justify-between md:h-24">
         <a href="#topo" aria-label="BuildScale Company — início" className="shrink-0">
-          <Logo src={logoSrc} priority className="h-7 sm:h-8 md:h-9" />
+          <Logo src={logoSrc} priority className="h-14 md:h-16" />
         </a>
         <motion.a
           href="#diagnostico"

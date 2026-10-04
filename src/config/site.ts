@@ -24,8 +24,12 @@ export const siteConfig = {
   /** ID do Meta Pixel (só dígitos). Enquanto estiver com o placeholder, o pixel não carrega. */
   metaPixelId: "[ID DO PIXEL]",
 
-  /** Caminho do logo em /public */
+  /** Logo original em /public (usado na imagem de compartilhamento) */
   logo: "/logo.png",
+  /** Recorte do logo sem a frase de baixo, para o header */
+  logoHeader: "/logo-header.png",
+  /** Logo completo, com a frase, para o rodapé */
+  logoFooter: "/logo-full.png",
 
   seo: {
     title: "BuildScale Company | Marketing para construtoras brasileiras nos EUA",
