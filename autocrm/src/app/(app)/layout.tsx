@@ -9,6 +9,7 @@ import { env } from "@/lib/env";
 import { getCurrentUser } from "@/features/auth/server";
 import { getSwitchableTenants } from "@/features/admin/queries";
 import { UserProvider } from "@/features/auth/user-provider";
+import { RepoProvider } from "@/features/data/repo-provider";
 import { agencyBranding } from "@/features/tenants/demo-tenant";
 import { tenantUrl } from "@/features/tenants/host";
 import { getTenantContext } from "@/features/tenants/server";
@@ -77,6 +78,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   return (
     <TenantProvider tenant={tenant}>
       <UserProvider user={user}>
+        <RepoProvider>
         {/* cor da loja já no primeiro paint */}
         <style precedence="tenant" href={`tenant-${tenant.id}`}>
           {tenantStyleTag(tenant)}
@@ -90,6 +92,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           {children}
         </AppShell>
         <NewLeadListener />
+        </RepoProvider>
       </UserProvider>
     </TenantProvider>
   );

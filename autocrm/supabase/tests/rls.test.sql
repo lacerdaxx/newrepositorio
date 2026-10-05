@@ -166,6 +166,25 @@ do $$ begin
   end;
 end $$;
 
+-- ---------- captação pública (anon) ----------
+do $$
+declare r jsonb; r2 jsonb;
+begin
+  assert app.normalize_phone('(61) 99999-1234') = '5561999991234', 'normaliza celular';
+  assert app.normalize_phone('6188881234') = '5561988881234', 'adiciona o 9';
+  assert app.normalize_phone('123') is null, 'telefone inválido';
+  r := public.submit_public_lead('loja-a', 'Lead Site', '(61) 97777-0001', null, 'meta_ads', '{"utm_campaign":"onix-outubro"}');
+  assert (r ->> 'duplicate')::boolean = false, 'lead novo';
+  assert (r ->> 'assigned_to') is not null, 'rodízio atribuiu vendedor';
+  r2 := public.submit_public_lead('loja-a', 'Lead Site', '61977770001', null, 'site', '{}');
+  assert (r2 ->> 'duplicate')::boolean = true and r2 ->> 'lead_id' = r ->> 'lead_id', 'deduplicação';
+  begin
+    perform public.submit_public_lead('loja-b', 'X', '61977770002');
+    raise exception 'loja desativada não deveria captar';
+  exception when no_data_found then null;
+  end;
+end $$;
+
 reset role;
 rollback;
 \echo 'RLS: todos os testes passaram'

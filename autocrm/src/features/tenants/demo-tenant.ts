@@ -14,6 +14,7 @@ export const demoTenant: TenantBranding = {
   timezone: "America/Sao_Paulo",
   offersGroupUrl: null,
   active: true,
+  noContactAlertMinutes: 15,
 };
 
 export const agencyBranding: TenantBranding = {
@@ -28,4 +29,5 @@ export const agencyBranding: TenantBranding = {
   timezone: "America/Sao_Paulo",
   offersGroupUrl: null,
   active: true,
+  noContactAlertMinutes: 15,
 };

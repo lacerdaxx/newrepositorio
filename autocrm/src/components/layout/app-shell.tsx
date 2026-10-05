@@ -1,4 +1,6 @@
 import type { SwitchableTenant } from "@/features/admin/queries";
+import { Suspense } from "react";
+import { LeadDrawerHost } from "@/features/leads/drawer/lead-drawer";
 import { CommandPalette } from "./command-palette";
 import { GlobalHotkeys } from "./global-hotkeys";
 import { MobileNav } from "./mobile-nav";
@@ -31,6 +33,9 @@ export function AppShell({
         </div>
       </div>
       <CommandPalette />
+      <Suspense>
+        <LeadDrawerHost />
+      </Suspense>
       <GlobalHotkeys />
     </ShellProvider>
   );

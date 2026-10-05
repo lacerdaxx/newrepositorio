@@ -10,6 +10,8 @@ export type TenantBranding = {
   timezone: string;
   offersGroupUrl: string | null;
   active: boolean;
+  /** minutos sem primeiro contato até o card ficar vermelho */
+  noContactAlertMinutes: number;
 };
 
 /** Contexto "agência": acesso pelo domínio raiz, sem loja selecionada. */

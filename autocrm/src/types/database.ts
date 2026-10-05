@@ -290,6 +290,31 @@ export type PublicTenant = Pick<
   | "timezone"
   | "offers_group_url"
   | "active"
+  | "no_contact_alert_minutes"
+>;
+
+export type PublicVehicle = Pick<
+  VehicleRow,
+  | "id"
+  | "brand"
+  | "model"
+  | "version"
+  | "year_manufacture"
+  | "year_model"
+  | "km"
+  | "color"
+  | "transmission"
+  | "fuel"
+  | "price"
+  | "description"
+  | "features"
+  | "status"
+  | "cover_url"
+> & { plate_end: string; photos: string[] };
+
+export type PublicVehicleSummary = Pick<
+  VehicleRow,
+  "id" | "brand" | "model" | "version" | "year_model" | "km" | "price" | "status" | "transmission" | "fuel" | "cover_url"
 >;
 
 export type TenantOverviewRow = Pick<
@@ -329,6 +354,20 @@ export type Database = {
     Functions: {
       get_public_tenant: { Args: { p_slug?: string; p_domain?: string }; Returns: PublicTenant[] };
       admin_tenant_overview: { Args: Record<string, never>; Returns: TenantOverviewRow[] };
+      submit_public_lead: {
+        Args: {
+          p_tenant_slug: string;
+          p_name: string;
+          p_phone: string;
+          p_vehicle_id?: string | null;
+          p_source?: string;
+          p_payload?: Json;
+        };
+        Returns: { lead_id: string; duplicate: boolean; assigned_to?: string | null };
+      };
+      get_public_vehicle: { Args: { p_tenant_slug: string; p_vehicle_id: string }; Returns: PublicVehicle | null };
+      list_public_vehicles: { Args: { p_tenant_slug: string }; Returns: PublicVehicleSummary[] };
+      vehicle_interest_counts: { Args: { p_tenant: string }; Returns: { vehicle_id: string; leads: number }[] };
     };
     Enums: {
       app_role: AppRole;

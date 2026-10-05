@@ -2,6 +2,7 @@ import "server-only";
 import { isSupabaseConfigured } from "@/lib/env";
 import { getSupabaseServer } from "@/lib/supabase/server";
 import { demoTenant } from "@/features/tenants/demo-tenant";
+import { demoTeam } from "@/features/data/demo-data";
 import type { ProfileRow, TenantOverviewRow, TenantRow } from "@/types/database";
 
 const now = new Date().toISOString();
@@ -13,27 +14,7 @@ const demoOverview: TenantOverviewRow[] = [
   { id: "00000000-0000-0000-0000-000000000004", name: "Auto Center Sul", slug: "auto-center-sul", logo_url: null, primary_color: "#f59e0b", active: false, created_at: now, users_count: 2, leads_month: 0, leads_total: 312, sales_month: 0, unattended: 0 },
 ];
 
-const demoProfiles: ProfileRow[] = [
-  ["Ricardo Mendes", "gerente", 1],
-  ["Ana Ribeiro", "vendedor", 2],
-  ["Pedro Lima", "vendedor", 1],
-  ["Lucas Martins", "vendedor", 1],
-  ["Fernanda Rocha", "vendedor", 0],
-].map(([name, role, weight], i) => ({
-  id: `00000000-0000-0000-0000-0000000001${String(i).padStart(2, "0")}`,
-  tenant_id: demoTenant.id,
-  role: role as ProfileRow["role"],
-  full_name: name as string,
-  email: `${(name as string).split(" ")[0]!.toLowerCase()}@abcmultimarcas.com.br`,
-  phone: null,
-  avatar_url: null,
-  active: i !== 4,
-  receives_leads: role === "vendedor",
-  distribution_weight: weight as number,
-  last_assigned_at: null,
-  created_at: now,
-  updated_at: now,
-}));
+const demoProfiles: ProfileRow[] = demoTeam;
 
 export async function getTenantOverview(): Promise<TenantOverviewRow[]> {
   if (!isSupabaseConfigured) return demoOverview;

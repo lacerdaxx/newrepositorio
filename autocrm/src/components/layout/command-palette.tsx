@@ -21,7 +21,8 @@ import {
 import { Kbd } from "@/components/ui/kbd";
 import { transition } from "@/lib/motion";
 import { useShell } from "./shell-state";
-import { searchProviders } from "./command-search";
+import { useCommandSearch } from "./command-search";
+import { usePathname } from "next/navigation";
 
 export function CommandPalette() {
   const { paletteOpen, setPaletteOpen, toggleCollapsed } = useShell();
@@ -37,7 +38,9 @@ export function CommandPalette() {
     fn();
   };
 
-  const results = React.useMemo(() => searchProviders(query), [query]);
+  const results = useCommandSearch(query);
+  const pathname = usePathname();
+  const openLead = (id: string) => router.push(`${pathname}?lead=${id}`, { scroll: false });
 
   return (
     <DialogPrimitive.Root open={paletteOpen} onOpenChange={setPaletteOpen}>
@@ -77,8 +80,9 @@ export function CommandPalette() {
                         {results.leads.map((l) => (
                           <CommandItem
                             key={l.id}
-                            value={`lead ${l.title} ${l.subtitle}`}
-                            onSelect={() => run(() => router.push(l.href))}
+                            value={`lead ${l.id} ${l.title}`}
+                            keywords={[query]}
+                            onSelect={() => run(() => openLead(l.id))}
                           >
                             <UserRound />
                             <span className="truncate">{l.title}</span>
@@ -92,7 +96,8 @@ export function CommandPalette() {
                         {results.vehicles.map((v) => (
                           <CommandItem
                             key={v.id}
-                            value={`veiculo ${v.title} ${v.subtitle}`}
+                            value={`veiculo ${v.id} ${v.title}`}
+                            keywords={[query]}
                             onSelect={() => run(() => router.push(v.href))}
                           >
                             <CarFront />

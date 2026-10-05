@@ -26,6 +26,7 @@ export function toBranding(t: PublicTenant): TenantBranding {
     timezone: t.timezone,
     offersGroupUrl: t.offers_group_url,
     active: t.active,
+    noContactAlertMinutes: t.no_contact_alert_minutes,
   };
 }
 
