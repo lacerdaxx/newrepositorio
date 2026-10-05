@@ -1,0 +1,20 @@
+# Configuração do Supabase CLI (desenvolvimento local: `npx supabase start`).
+# Chaves não listadas usam o padrão do CLI.
+project_id = "autocrm"
+
+[api]
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+
+[auth]
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["http://*.localhost:3000/**", "https://*.meudominio.com.br/**"]
+# Contas são criadas pela agência/gerente — sem cadastro público
+enable_signup = false
+
+[auth.email]
+enable_signup = false
+enable_confirmations = false
+
+[storage]
+file_size_limit = "10MiB"

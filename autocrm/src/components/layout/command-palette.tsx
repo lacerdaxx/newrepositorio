@@ -5,8 +5,10 @@ import { useTheme } from "next-themes";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
 import { CarFront, Moon, PanelLeft, Plus, Sun, Upload, UserRound } from "lucide-react";
-import { allNavItems } from "@/config/nav";
-import { canSee, useCurrentUser } from "@/features/auth/user-provider";
+import { allNavItems, isVisible } from "@/config/nav";
+import { useCurrentUser } from "@/features/auth/user-provider";
+import { useTenant } from "@/features/tenants/tenant-provider";
+import { AGENCY_TENANT_ID } from "@/features/tenants/types";
 import {
   Command,
   CommandEmpty,
@@ -25,6 +27,7 @@ export function CommandPalette() {
   const { paletteOpen, setPaletteOpen, toggleCollapsed } = useShell();
   const router = useRouter();
   const user = useCurrentUser();
+  const isAgency = useTenant().id === AGENCY_TENANT_ID;
   const { resolvedTheme, setTheme } = useTheme();
   const [query, setQuery] = React.useState("");
 
@@ -100,6 +103,7 @@ export function CommandPalette() {
                       </CommandGroup>
                     )}
 
+                    {!isAgency && (
                     <CommandGroup heading="Ações">
                       <CommandItem
                         value="novo lead criar cadastrar"
@@ -114,11 +118,12 @@ export function CommandPalette() {
                         <CarFront /> Cadastrar veículo
                       </CommandItem>
                     </CommandGroup>
+                    )}
 
                     <CommandSeparator />
                     <CommandGroup heading="Navegar">
                       {allNavItems
-                        .filter((i) => canSee(user.role, i.roles))
+                        .filter((i) => isVisible(i, user.role, isAgency))
                         .map((item) => (
                           <CommandItem
                             key={item.href}

@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import type { Role } from "@/config/nav";
+import type { AppRole } from "@/types/database";
 import type { CurrentUser } from "./types";
 
 const UserContext = React.createContext<CurrentUser | null>(null);
@@ -15,6 +15,6 @@ export function useCurrentUser() {
   return ctx;
 }
 
-export function canSee(role: Role, allowed?: Role[]) {
+export function canSee(role: AppRole, allowed?: AppRole[]) {
   return !allowed || allowed.includes(role);
 }

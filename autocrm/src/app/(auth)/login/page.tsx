@@ -1,0 +1,9 @@
+import { isSupabaseConfigured } from "@/lib/env";
+import { LoginForm } from "./login-form";
+
+export const metadata = { title: "Entrar" };
+
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
+  const { next } = await searchParams;
+  return <LoginForm next={next} demo={!isSupabaseConfigured} />;
+}

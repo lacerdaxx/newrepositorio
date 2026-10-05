@@ -11,6 +11,10 @@
 :root {
   --brand: #2563eb;
   --brand-foreground: #ffffff;
+}
+
+:root,
+.theme-light {
 
   --background: oklch(0.992 0.002 260);
   --foreground: oklch(0.205 0.012 265);
@@ -22,7 +26,7 @@
   --border: oklch(0.918 0.005 260);
   --border-strong: oklch(0.86 0.007 260);
   --input: oklch(0.905 0.006 260);
-  --ring: color-mix(in oklch, var(--brand) 55%, transparent);
+  --ring: color-mix(in oklch, var(--brand) 28%, transparent);
   --accent: oklch(0.955 0.005 260);
   --accent-foreground: oklch(0.205 0.012 265);
   --popover: oklch(1 0 0);
@@ -35,12 +39,15 @@
   --whatsapp: #25d366;
 
   --shadow-color: 220 30% 15%;
+  color-scheme: light;
   --radius: 0.75rem;
   --sidebar-width: 15.5rem;
   --sidebar-collapsed: 3.75rem;
 }
 
-.dark {
+.dark,
+.theme-dark {
+  color-scheme: dark;
   --background: oklch(0.145 0.004 265);
   --foreground: oklch(0.965 0.003 260);
   --surface: oklch(0.175 0.005 265);

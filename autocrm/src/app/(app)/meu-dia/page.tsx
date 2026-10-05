@@ -4,7 +4,7 @@ import { PageBody, PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { demoUser } from "@/features/auth/demo-user";
+import { requireUser } from "@/features/auth/server";
 
 export const metadata = { title: "Meu dia" };
 
@@ -19,7 +19,8 @@ const sections = [
   { title: "Follow-ups pendentes", icon: Repeat, empty: "Nenhum follow-up pendente." },
 ];
 
-export default function MeuDiaPage() {
+export default async function MeuDiaPage() {
+  const user = await requireUser();
   const today = new Date().toLocaleDateString("pt-BR", {
     weekday: "long",
     day: "numeric",
@@ -29,7 +30,7 @@ export default function MeuDiaPage() {
   return (
     <>
       <PageHeader
-        title={`${greeting()}, ${demoUser.name.split(" ")[0]}`}
+        title={`${greeting()}, ${user.name.split(" ")[0]}`}
         description={<span className="capitalize">{today}</span>}
         actions={
           <Button asChild>

@@ -1,7 +1,11 @@
 "use client";
 import * as React from "react";
+import type { SwitchableTenant } from "@/features/admin/queries";
 
 type ShellState = {
+  rootDomain: string;
+  /** lojas acessíveis pela agência (vazio para usuários de loja) */
+  tenants: SwitchableTenant[];
   collapsed: boolean;
   setCollapsed: (v: boolean) => void;
   toggleCollapsed: () => void;
@@ -16,9 +20,13 @@ export const SIDEBAR_COOKIE = "autocrm_sidebar_collapsed";
 
 export function ShellProvider({
   defaultCollapsed,
+  rootDomain,
+  tenants,
   children,
 }: {
   defaultCollapsed: boolean;
+  rootDomain: string;
+  tenants: SwitchableTenant[];
   children: React.ReactNode;
 }) {
   const [collapsed, setCollapsedState] = React.useState(defaultCollapsed);
@@ -32,6 +40,8 @@ export function ShellProvider({
 
   const value = React.useMemo<ShellState>(
     () => ({
+      rootDomain,
+      tenants,
       collapsed,
       setCollapsed,
       toggleCollapsed: () => setCollapsed(!collapsed),
@@ -40,7 +50,7 @@ export function ShellProvider({
       paletteOpen,
       setPaletteOpen,
     }),
-    [collapsed, setCollapsed, mobileOpen, paletteOpen],
+    [rootDomain, tenants, collapsed, setCollapsed, mobileOpen, paletteOpen],
   );
 
   return <ShellContext.Provider value={value}>{children}</ShellContext.Provider>;

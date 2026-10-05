@@ -3,10 +3,12 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
-import { ChevronsLeft, ChevronsUpDown, LogOut, Moon, Plus, Search, Sun, UserRound } from "lucide-react";
+import { Building2, Check, ChevronsLeft, ChevronsUpDown, LogOut, Moon, Plus, Search, Sun, UserRound } from "lucide-react";
+import { tenantUrl } from "@/features/tenants/host";
 import { useTheme } from "next-themes";
-import { navSections, type NavItem } from "@/config/nav";
-import { canSee, useCurrentUser } from "@/features/auth/user-provider";
+import { isVisible, navSections, type NavItem } from "@/config/nav";
+import { useCurrentUser } from "@/features/auth/user-provider";
+import { AGENCY_TENANT_ID } from "@/features/tenants/types";
 import { useTenant } from "@/features/tenants/tenant-provider";
 import { TenantMark } from "@/components/brand/tenant-logo";
 import { Avatar } from "@/components/ui/avatar";
@@ -59,6 +61,8 @@ export function Sidebar() {
 export function SidebarContent({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?: () => void }) {
   const pathname = usePathname();
   const user = useCurrentUser();
+  const tenant = useTenant();
+  const isAgency = tenant.id === AGENCY_TENANT_ID;
   const { setPaletteOpen } = useShell();
 
   return (
@@ -83,6 +87,7 @@ export function SidebarContent({ collapsed, onNavigate }: { collapsed: boolean; 
             )}
           </button>
         </Tooltip>
+        {!isAgency && (
         <Tooltip content={<>Novo lead <Kbd>N</Kbd></>} side={collapsed ? "right" : "bottom"}>
           <button
             onClick={() => window.dispatchEvent(new CustomEvent("autocrm:new-lead"))}
@@ -92,12 +97,13 @@ export function SidebarContent({ collapsed, onNavigate }: { collapsed: boolean; 
             <Plus className="size-4" />
           </button>
         </Tooltip>
+        )}
       </div>
 
       <nav className="flex-1 overflow-y-auto overflow-x-hidden px-2 pb-3 scrollbar-none" aria-label="Navegação principal">
         <LayoutGroup id="sidebar-nav">
           {navSections.map((section, i) => {
-            const items = section.items.filter((it) => canSee(user.role, it.roles));
+            const items = section.items.filter((it) => isVisible(it, user.role, isAgency));
             if (items.length === 0) return null;
             return (
               <div key={i} className="mt-3 first:mt-1">
@@ -201,6 +207,7 @@ function WorkspaceSwitcher({ collapsed }: { collapsed: boolean }) {
   const tenant = useTenant();
   const user = useCurrentUser();
   const { theme, setTheme } = useTheme();
+  const { tenants, rootDomain } = useShell();
 
   return (
     <div className="p-2">
@@ -234,6 +241,29 @@ function WorkspaceSwitcher({ collapsed }: { collapsed: boolean }) {
               <div className="truncate text-xs text-muted-foreground">{user.email}</div>
             </div>
           </div>
+          {tenants.length > 0 && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel>Lojas</DropdownMenuLabel>
+              <div className="max-h-56 overflow-y-auto">
+                <DropdownMenuItem asChild>
+                  <a href={tenantUrl("agencia", rootDomain, "/admin")}>
+                    <Building2 /> Painel da agência
+                    {tenant.id === AGENCY_TENANT_ID && <Check className="ml-auto !text-foreground" />}
+                  </a>
+                </DropdownMenuItem>
+                {tenants.map((t) => (
+                  <DropdownMenuItem key={t.id} asChild>
+                    <a href={tenantUrl(t.slug, rootDomain, "/meu-dia")} className={cn(!t.active && "opacity-50")}>
+                      <span className="size-3 rounded-full ring-1 ring-border" style={{ background: t.primaryColor }} />
+                      <span className="truncate">{t.name}</span>
+                      {tenant.id === t.id && <Check className="ml-auto !text-foreground" />}
+                    </a>
+                  </DropdownMenuItem>
+                ))}
+              </div>
+            </>
+          )}
           <DropdownMenuSeparator />
           <DropdownMenuLabel>Conta</DropdownMenuLabel>
           <DropdownMenuItem asChild>
@@ -247,9 +277,9 @@ function WorkspaceSwitcher({ collapsed }: { collapsed: boolean }) {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem destructive asChild>
-            <Link href="/logout">
+            <a href="/auth/sair">
               <LogOut /> Sair
-            </Link>
+            </a>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

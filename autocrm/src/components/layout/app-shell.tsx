@@ -1,3 +1,4 @@
+import type { SwitchableTenant } from "@/features/admin/queries";
 import { CommandPalette } from "./command-palette";
 import { GlobalHotkeys } from "./global-hotkeys";
 import { MobileNav } from "./mobile-nav";
@@ -6,9 +7,19 @@ import { ShellProvider } from "./shell-state";
 import { Sidebar } from "./sidebar";
 import { Topbar } from "./topbar";
 
-export function AppShell({ defaultCollapsed, children }: { defaultCollapsed: boolean; children: React.ReactNode }) {
+export function AppShell({
+  defaultCollapsed,
+  rootDomain,
+  tenants,
+  children,
+}: {
+  defaultCollapsed: boolean;
+  rootDomain: string;
+  tenants: SwitchableTenant[];
+  children: React.ReactNode;
+}) {
   return (
-    <ShellProvider defaultCollapsed={defaultCollapsed}>
+    <ShellProvider defaultCollapsed={defaultCollapsed} rootDomain={rootDomain} tenants={tenants}>
       <div className="flex min-h-dvh">
         <Sidebar />
         <MobileNav />

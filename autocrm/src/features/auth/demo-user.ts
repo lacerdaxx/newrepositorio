@@ -5,5 +5,7 @@ export const demoUser: CurrentUser = {
   name: "Mariana Costa",
   email: "mariana@abcmultimarcas.com.br",
   role: "superadmin",
+  tenantId: null,
   avatarUrl: null,
+  active: true,
 };
