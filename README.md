@@ -1,5 +1,7 @@
 # ABC Multimarcas — Landing Page
 
+> O CRM (AutoCRM) fica em [`autocrm/`](autocrm/README.md).
+
 Landing page de captação de leads para loja de veículos, com design dark (preto e vermelho), animações e formulário de contato.
 
 ## Estrutura
