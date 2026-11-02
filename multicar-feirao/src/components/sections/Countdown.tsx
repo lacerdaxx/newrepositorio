@@ -1,20 +1,14 @@
 import { useCountdown } from '../../hooks/useCountdown'
 
-function Digit({ value, label }: { value: number; label: string }) {
+function Unit({ value, label }: { value: number; label: string }) {
   const v = String(value).padStart(2, '0')
   return (
-    <div className="glass relative flex flex-col items-center rounded-md px-3 py-4 sm:px-6 sm:py-6" style={{ perspective: 600 }}>
-      <i className="hud-corner hud-tl" /><i className="hud-corner hud-br" />
-      <span
-        className="t3d-letter t3d-orange font-display text-[clamp(2rem,9vw,4.5rem)] font-black tabular-nums"
-        data-t={v}
-        style={{ transform: 'rotateX(8deg)' }}
-        aria-hidden="true"
-      >
+    <div className="flex flex-col items-center">
+      <span className="t3d-letter t3d-orange font-display text-[clamp(3.2rem,15vw,10rem)] leading-none tabular-nums" data-t={v} aria-hidden="true">
         <span className="t3d-face">{v}</span>
       </span>
       <span className="sr-only">{value}</span>
-      <span className="mt-2 font-display text-[0.55rem] font-bold tracking-[0.3em] text-steel sm:text-xs">{label}</span>
+      <span className="mt-3 font-cond text-[0.7rem] font-extrabold tracking-[0.35em] text-steel sm:text-sm">{label}</span>
     </div>
   )
 }
@@ -22,25 +16,25 @@ function Digit({ value, label }: { value: number; label: string }) {
 export function Countdown() {
   const c = useCountdown()
   return (
-    <section aria-labelledby="contador-titulo" className="relative px-4 py-16 sm:px-6">
-      <div className="light-line absolute inset-x-0 top-0" />
-      <div className="mx-auto max-w-3xl text-center" data-reveal>
+    <section aria-labelledby="contador-titulo" className="relative overflow-hidden bg-coal px-4 pb-16 pt-20 sm:px-8 sm:pb-24 sm:pt-28">
+      <div className="carbon absolute inset-0 opacity-30" aria-hidden="true" />
+      <div className="relative mx-auto max-w-[1500px]" data-reveal>
         {c.phase === 'before' && (
           <>
-            <h2 id="contador-titulo" className="mb-6 font-display text-xs font-bold tracking-[0.35em] text-brand sm:text-sm">O FEIRÃO COMEÇA EM</h2>
-            <div className="grid grid-cols-4 gap-2 sm:gap-4" role="timer" aria-live="off">
-              <Digit value={c.d} label="DIAS" />
-              <Digit value={c.h} label="HORAS" />
-              <Digit value={c.m} label="MINUTOS" />
-              <Digit value={c.s} label="SEGUNDOS" />
+            <h2 id="contador-titulo" className="mb-8 font-cond text-sm font-extrabold tracking-[0.45em] text-brand sm:text-lg">// O FEIRÃO COMEÇA EM</h2>
+            <div className="flex items-start justify-between gap-1 sm:justify-start sm:gap-10" role="timer" aria-live="off">
+              <Unit value={c.d} label="DIAS" /><span className="font-display text-[clamp(2.5rem,10vw,7rem)] leading-[1.15] text-white/20" aria-hidden="true">:</span>
+              <Unit value={c.h} label="HORAS" /><span className="font-display text-[clamp(2.5rem,10vw,7rem)] leading-[1.15] text-white/20" aria-hidden="true">:</span>
+              <Unit value={c.m} label="MINUTOS" /><span className="font-display text-[clamp(2.5rem,10vw,7rem)] leading-[1.15] text-white/20" aria-hidden="true">:</span>
+              <Unit value={c.s} label="SEGUNDOS" />
             </div>
           </>
         )}
         {c.phase === 'live' && (
-          <h2 id="contador-titulo" className="font-display text-[clamp(1.6rem,6vw,3.5rem)] font-black text-brand drop-shadow-[0_0_24px_rgba(255,106,0,.7)]">COMEÇOU O MEGA FEIRÃO!</h2>
+          <h2 id="contador-titulo" className="font-display text-[clamp(2.8rem,11vw,9rem)] leading-[0.9] text-brand">COMEÇOU O MEGA FEIRÃO!</h2>
         )}
         {c.phase === 'ended' && (
-          <h2 id="contador-titulo" className="font-display text-xl font-bold tracking-wider text-steel">O MEGA FEIRÃO DE ANIVERSÁRIO FOI ENCERRADO. OBRIGADO, LUZIÂNIA!</h2>
+          <h2 id="contador-titulo" className="font-display text-[clamp(2rem,6vw,4rem)] leading-none text-steel">O MEGA FEIRÃO FOI ENCERRADO. OBRIGADO, LUZIÂNIA!</h2>
         )}
       </div>
     </section>

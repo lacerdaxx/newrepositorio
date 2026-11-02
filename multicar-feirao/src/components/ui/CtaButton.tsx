@@ -2,9 +2,8 @@ import { ArrowRight } from 'lucide-react'
 import { useRef } from 'react'
 import { scrollToForm } from '../../lib/scroll'
 
-export function CtaButton({ children }: { children: string }) {
+export function CtaButton({ children, dark = false }: { children: string; dark?: boolean }) {
   const ref = useRef<HTMLButtonElement>(null)
-  // movimento sutil de profundidade seguindo o cursor
   const move = (e: React.PointerEvent) => {
     const b = ref.current
     if (!b || e.pointerType !== 'mouse') return
@@ -15,9 +14,9 @@ export function CtaButton({ children }: { children: string }) {
   }
   const leave = () => { if (ref.current) ref.current.style.transform = '' }
   return (
-    <button ref={ref} type="button" className="cta" onClick={scrollToForm} onPointerMove={move} onPointerLeave={leave}>
+    <button ref={ref} type="button" className={`cta ${dark ? 'cta-dark' : ''}`} onClick={scrollToForm} onPointerMove={move} onPointerLeave={leave}>
       <span className="relative">{children}</span>
-      <ArrowRight size={18} className="relative" aria-hidden="true" />
+      <ArrowRight size={20} className="relative" aria-hidden="true" />
     </button>
   )
 }

@@ -72,7 +72,7 @@ function Car({ pointer, mobile }: { pointer: React.MutableRefObject<{ x: number;
     group.current.position.y = Math.sin(t * 0.8) * 0.02
   })
   return (
-    <group ref={group} position={mobile ? [0.3, -0.2, 0] : [1.9, 0, 0]} scale={mobile ? 0.62 : 0.85}>
+    <group ref={group} position={[0, 0, 0]} scale={mobile ? 0.8 : 1}>
       <mesh geometry={geo} position={[0, 0, -0.75]} castShadow>
         <meshPhysicalMaterial color="#3a3a3e" metalness={0.9} roughness={0.22} clearcoat={1} clearcoatRoughness={0.05} envMapIntensity={1.6} />
       </mesh>
@@ -143,7 +143,7 @@ function Rig({ pointer, reduced, mobile }: { pointer: React.MutableRefObject<{ x
     cam.position.x += (pointer.current.x * 0.6 - cam.position.x) * 0.04
     cam.position.y += (1.4 + pointer.current.y * 0.3 - cam.position.y) * 0.04
     cam.position.z = z
-    cam.lookAt(mobile ? 0 : 1.2, 0.6, 0)
+    cam.lookAt(0, 0.6, 0)
   })
   return null
 }

@@ -5,8 +5,8 @@ import { site } from '../../config/site'
 export function Footer() {
   const c = site.contacts
   return (
-    <footer className="border-t border-white/10 bg-black px-4 py-12 sm:px-6">
-      <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-3">
+    <footer className="bg-black px-4 py-14 sm:px-8">
+      <div className="mx-auto grid max-w-[1500px] gap-10 md:grid-cols-3">
         <div>
           <Logo />
           <p className="mt-3 text-sm text-steel">{site.city}</p>
@@ -29,7 +29,7 @@ export function Footer() {
           {!c.instagramUrl && !c.whatsappNumber && <p className="text-xs text-steel/60">Instagram e WhatsApp: configurar em .env</p>}
         </div>
       </div>
-      <p className="mx-auto mt-10 max-w-6xl border-t border-white/5 pt-6 text-xs leading-relaxed text-steel/70">{site.legalText}</p>
+      <p className="mx-auto mt-10 max-w-[1500px] border-t border-white/5 pt-6 text-xs leading-relaxed text-steel/70">{site.legalText}</p>
     </footer>
   )
 }

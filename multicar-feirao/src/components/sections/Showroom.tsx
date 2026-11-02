@@ -1,61 +1,55 @@
-import { useRef } from 'react'
-import { brands, stock, type StockItem } from '../../config/site'
+import { useState } from 'react'
+import { ArrowUpRight } from 'lucide-react'
+import { brands, stock } from '../../config/site'
 import { Text3D } from '../ui/Text3D'
 import { CarSilhouette } from '../ui/CarSilhouette'
-import { Backdrop } from '../ui/Backdrop'
 
-/** Card preparado para dados reais: preencha `stock` em config/site.ts (ou carregue de uma API). */
-function VehicleCard({ item }: { item: StockItem }) {
-  const ref = useRef<HTMLElement>(null)
-  const move = (e: React.PointerEvent) => {
-    const el = ref.current
-    if (!el || e.pointerType !== 'mouse') return
-    const r = el.getBoundingClientRect()
-    const x = (e.clientX - r.left) / r.width - 0.5
-    const y = (e.clientY - r.top) / r.height - 0.5
-    el.style.transform = `perspective(900px) rotateY(${x * 14}deg) rotateX(${-y * 12}deg) translateZ(10px)`
-    el.style.setProperty('--mx', `${(x + 0.5) * 100}%`)
-    el.style.setProperty('--my', `${(y + 0.5) * 100}%`)
-  }
-  const leave = () => { if (ref.current) ref.current.style.transform = '' }
-  return (
-    <article
-      ref={ref} onPointerMove={move} onPointerLeave={leave}
-      className="glass glow-border group relative overflow-hidden rounded-lg transition-transform duration-200 ease-out will-change-transform"
-    >
-      <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-b from-[#1a1a1a] to-ink">
-        <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: 'radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,106,0,.35), transparent 55%)' }} />
-        {item.image ? (
-          <img src={item.image} alt={item.name ?? `Veículo ${item.brand}`} loading="lazy" decoding="async" className="relative h-full w-full object-cover" data-parallax="0.03" />
-        ) : (
-          <CarSilhouette className="absolute inset-x-[8%] bottom-[10%] w-[84%] opacity-80 transition-transform duration-500 group-hover:scale-105" />
-        )}
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent" />
-      </div>
-      <div className="flex items-center justify-between p-5">
-        <div>
-          <p className="font-display text-lg font-black tracking-widest text-white">{item.brand}</p>
-          <p className="text-xs tracking-widest text-steel">{item.name ?? 'ZERO KM E SEMI-NOVOS'}</p>
-        </div>
-        <span className="h-2 w-2 rounded-full bg-brand shadow-[0_0_10px_#FF6A00]" aria-hidden="true" />
-      </div>
-    </article>
-  )
-}
-
+/**
+ * Estoque: lista tipográfica por marca. Cada item aceita `name` e `image` reais
+ * (config/site.ts → stock). Sem imagem, mostra silhueta no hover.
+ */
 export function Showroom() {
+  const [active, setActive] = useState(0)
+  const cur = stock[active]
   return (
-    <section id="estoque" aria-labelledby="estoque-titulo" className="relative overflow-hidden px-4 py-20 sm:px-6 sm:py-28">
-      <Backdrop variant="warm" />
-      <div className="relative mx-auto max-w-6xl">
-        <div className="text-center" data-reveal>
-          <h2 id="estoque-titulo" className="text-[clamp(1.6rem,5.5vw,3.6rem)]"><Text3D text="MAIS DE 300 CARROS EM ESTOQUE" variant="orange" onView /></h2>
-          <p className="mt-5 font-display text-xs font-bold tracking-[0.25em] text-white sm:text-sm">TODA LINHA ZERO KM E TAMBÉM CARROS SEMI-NOVOS</p>
-          <p className="mt-4 text-sm font-semibold tracking-[0.3em] text-brand">{brands.join(' • ')}</p>
+    <section id="estoque" aria-labelledby="estoque-titulo" className="relative overflow-hidden bg-coal px-4 py-20 sm:px-8 sm:py-32">
+      <div className="speed absolute inset-0 opacity-40" aria-hidden="true" />
+      <div className="relative mx-auto max-w-[1500px]">
+        <div className="relative" data-reveal>
+          <p className="font-display text-[clamp(9rem,40vw,34rem)] leading-[0.8] outline" aria-hidden="true">+300</p>
+          <h2 id="estoque-titulo" className="relative -mt-[0.12em] text-[clamp(2.4rem,9vw,7.5rem)] leading-[0.9] sm:-mt-[0.2em]">
+            <span className="sr-only">Mais de 300 carros em estoque</span>
+            <Text3D text="MAIS DE 300 CARROS EM ESTOQUE" variant="white" onView />
+          </h2>
+          <p className="mt-6 font-cond text-base font-extrabold tracking-[0.25em] text-brand sm:text-2xl">TODA LINHA ZERO KM E TAMBÉM CARROS SEMI-NOVOS</p>
         </div>
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
-          {stock.map((s) => <VehicleCard key={s.id} item={s} />)}
+
+        <div className="mt-16 grid gap-10 lg:grid-cols-[1.4fr_1fr]" data-reveal>
+          <ul className="border-t border-white/15">
+            {stock.map((s, i) => (
+              <li key={s.id} className="border-b border-white/15">
+                <button
+                  type="button" onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)} onClick={() => setActive(i)}
+                  className="group flex w-full items-center justify-between gap-4 py-4 text-left sm:py-6" aria-current={active === i}
+                >
+                  <span className={`font-display text-[clamp(2.8rem,10vw,7.5rem)] leading-none transition-all duration-300 ${active === i ? 'text-white [text-shadow:0_0_40px_rgba(255,106,0,.7)] translate-x-3' : 'outline-w'}`}>{s.brand}</span>
+                  <ArrowUpRight className={`shrink-0 transition ${active === i ? 'text-brand' : 'text-white/30'}`} size={40} aria-hidden="true" />
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          <div className="relative hidden aspect-[4/3] self-start overflow-hidden border border-brand/40 bg-ink lg:block" aria-hidden="true">
+            <div className="absolute inset-0" style={{ background: 'radial-gradient(70% 70% at 50% 100%, rgba(255,106,0,.4), transparent 70%)' }} />
+            {cur.image
+              ? <img src={cur.image} alt={cur.name ?? `Veículo ${cur.brand}`} loading="lazy" decoding="async" className="relative h-full w-full object-cover" />
+              : <CarSilhouette className="absolute inset-x-[6%] bottom-[12%] w-[88%]" />}
+            <p className="absolute left-4 top-4 font-cond text-xs font-extrabold tracking-[0.4em] text-brand">{cur.brand}</p>
+            <p className="absolute bottom-3 right-4 font-cond text-xs font-bold tracking-[0.3em] text-steel">{cur.name ?? 'ZERO KM · SEMI-NOVOS'}</p>
+            <i className="absolute left-2 top-2 h-4 w-4 border-l-2 border-t-2 border-brand" /><i className="absolute bottom-2 right-2 h-4 w-4 border-b-2 border-r-2 border-brand" />
+          </div>
         </div>
+        <p className="sr-only">{brands.join(', ')}</p>
       </div>
     </section>
   )

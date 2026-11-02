@@ -10,8 +10,9 @@ export default {
         steel: '#A8A8A8',
       },
       fontFamily: {
-        display: ['Orbitron', 'Rajdhani', 'sans-serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Anton', 'Impact', 'sans-serif'],
+        cond: ['"Barlow Condensed"', 'Arial Narrow', 'sans-serif'],
+        sans: ['Barlow', 'system-ui', 'sans-serif'],
       },
     },
   },
