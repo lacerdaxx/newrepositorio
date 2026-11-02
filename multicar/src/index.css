@@ -1,0 +1,259 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #080808;
+  --color-graphite: #171717;
+  --color-bone: #f2f0ec;
+  --color-ember: #f36b21;
+  --color-steel: #8c8c8c;
+  --font-display: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
+  --font-sans: 'Archivo', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-ink);
+    scroll-behavior: smooth;
+    scroll-padding-top: 4.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    background: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--color-ember);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ember);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* Gutter e medidas editoriais */
+.gutter {
+  padding-inline: clamp(1.25rem, 4vw, 4rem);
+}
+
+/* Títulos display */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 0.88;
+  letter-spacing: 0.005em;
+}
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Texto vazado (usado só em elementos de apoio) */
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1.5px currentColor;
+}
+
+/* Objeto 3D tipográfico: face metálica + extrusão por camadas de sombra */
+.x3d {
+  position: relative;
+  display: inline-block;
+  transform-style: preserve-3d;
+}
+.x3d__side {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  color: transparent;
+}
+.x3d__face {
+  position: relative;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.x3d--bone .x3d__face {
+  background-image: linear-gradient(180deg, #ffffff 0%, #e9e6e0 42%, #b9b4ab 50%, #efece6 58%, #cfcac2 100%);
+}
+.x3d--ember .x3d__face {
+  background-image: linear-gradient(180deg, #ff9a5c 0%, #f36b21 44%, #b4470f 52%, #f57a35 60%, #d9570f 100%);
+}
+.x3d--ink .x3d__face {
+  background-image: linear-gradient(180deg, #2a2a2a 0%, #0c0c0c 50%, #1d1d1d 100%);
+}
+
+/* Linha laranja de abertura */
+.rule-ember {
+  height: 2px;
+  background: var(--color-ember);
+  transform-origin: left center;
+}
+
+/* Botão principal */
+.btn-ember {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--color-ember);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 1.15rem 1.6rem 1.15rem 1.75rem;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.35s var(--ease-out-expo), color 0.35s var(--ease-out-expo);
+}
+.btn-ember:hover {
+  background: var(--color-bone);
+}
+.btn-ember:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.btn-ember .arrow {
+  display: inline-block;
+  transition: transform 0.35s var(--ease-out-expo);
+}
+.btn-ember:hover .arrow {
+  transform: translateX(6px);
+}
+
+/* Campos do formulário */
+.field {
+  position: relative;
+  padding-top: 1.35rem;
+}
+.field label,
+.field .legend {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-steel);
+  transition: color 0.3s;
+}
+.field input[type='text'],
+.field input[type='tel'] {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #3a3a3a;
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  font-size: 1.2rem;
+  padding: 0.7rem 0 0.8rem;
+  border-radius: 0;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.field input::placeholder {
+  color: #5a5a5a;
+}
+.field:focus-within label,
+.field:focus-within .legend {
+  color: var(--color-ember);
+}
+.field input:focus {
+  border-bottom-color: var(--color-ember);
+  box-shadow: 0 1px 0 0 var(--color-ember);
+}
+.field[data-invalid='true'] input {
+  border-bottom-color: #e5484d;
+}
+.field .err {
+  min-height: 1.1rem;
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: #ff8a8d;
+}
+
+.seg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 0.7rem;
+  border: 1px solid #3a3a3a;
+}
+.seg label {
+  cursor: pointer;
+  padding: 0.95rem 0;
+  text-align: center;
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  transition: background-color 0.3s, color 0.3s;
+}
+.seg label + label {
+  border-left: 1px solid #3a3a3a;
+}
+.seg input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.seg input:checked + span {
+  color: var(--color-ink);
+}
+.seg label:has(input:checked) {
+  background: var(--color-bone);
+  color: var(--color-ink);
+}
+.seg label:has(input:focus-visible) {
+  outline: 2px solid var(--color-ember);
+  outline-offset: 3px;
+}
+
+/* Marcas */
+.brands:hover .brand {
+  opacity: 0.28;
+}
+.brands .brand {
+  transition: opacity 0.4s, color 0.4s;
+}
+.brands:hover .brand:hover {
+  opacity: 1;
+  color: var(--color-ember);
+}
+
+/* Foto reservada (quando o arquivo ainda não foi adicionado) */
+.photo-slot {
+  background:
+    radial-gradient(60% 70% at 62% 38%, #2b2b2b 0%, #141414 55%, #0b0b0b 100%);
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  background: var(--color-ember);
+  color: var(--color-ink);
+  padding: 0.7rem 1rem;
+  font-weight: 800;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 1rem;
+}
