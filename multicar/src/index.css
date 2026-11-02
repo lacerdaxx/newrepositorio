@@ -1,0 +1,79 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #080808;
+  --color-graphite: #171717;
+  --color-bone: #f2f0ec;
+  --color-ember: #f36b21;
+  --color-steel: #8c8c8c;
+  --font-display: 'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif;
+  --font-sans: 'Inter Tight Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+html { background: var(--color-ink); scroll-behavior: auto; overflow-x: clip; }
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection { background: var(--color-ember); color: var(--color-ink); }
+:focus-visible { outline: 2px solid var(--color-ember); outline-offset: 3px; }
+
+.display { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; line-height: 0.86; letter-spacing: -0.005em; }
+.mono { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+
+/* ── 3D type: back layer carries the extrusion, front layer the metal face ── */
+.x3d { position: relative; display: block; width: fit-content; white-space: nowrap; transform-style: preserve-3d; margin-top: -.22em; }
+.x3d > .x3d-back {
+  position: absolute; inset: 0; padding-top: .22em; color: #1c1c1c; pointer-events: none; user-select: none;
+  text-shadow: var(--x3d-extrude), 0 .2em .28em rgba(0,0,0,.5);
+}
+.x3d > .x3d-face {
+  position: relative; display: block; padding-top: .22em;
+  background: linear-gradient(180deg, #fbfaf7 0%, #d9d6cf 42%, #8c8c8c 52%, #cfcbc3 74%, #f2f0ec 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 -1px 0 rgba(255,255,255,.35));
+}
+.x3d.ember > .x3d-back { color: #7a2f0b; }
+.x3d.ember > .x3d-face {
+  background: linear-gradient(180deg, #ffb27d 0%, #f36b21 44%, #c4500f 54%, #f36b21 80%, #ff8f4d 100%);
+  -webkit-background-clip: text; background-clip: text;
+}
+
+.line-mask { display: block; overflow: hidden; padding: .2em 0 .08em; margin: -.2em 0 -.08em; }
+
+.btn-ember {
+  position: relative; display: inline-flex; align-items: center; gap: .9rem;
+  background: var(--color-ember); color: var(--color-ink);
+  font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .86rem;
+  padding: 1.15rem 1.6rem 1.15rem 1.75rem; overflow: hidden;
+  transition: color .35s cubic-bezier(.2,.7,.2,1);
+}
+.btn-ember::before {
+  content: ''; position: absolute; inset: 0; background: var(--color-bone);
+  transform: translateY(101%); transition: transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.btn-ember > * { position: relative; z-index: 1; }
+.btn-ember:hover::before, .btn-ember:focus-visible::before { transform: translateY(0); }
+.btn-ember .arrow { transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.btn-ember:hover .arrow { transform: translateX(5px); }
+.btn-ember:disabled { opacity: .55; cursor: wait; }
+
+.field { position: relative; border-bottom: 1px solid #3a3a3a; transition: border-color .3s; }
+.field:focus-within { border-color: var(--color-ember); }
+.field label, .field .legend { display: block; padding-top: 1rem; }
+.field input, .field select {
+  width: 100%; background: transparent; border: 0; outline: 0; color: var(--color-bone);
+  font-size: 1.35rem; padding: .35rem 0 .9rem; border-radius: 0; appearance: none;
+}
+.field input::placeholder { color: #55534f; }
+.field select option { background: #171717; }
+.field[data-invalid='true'] { border-color: #e5484d; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
